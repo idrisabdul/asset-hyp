@@ -49,7 +49,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Dashboard</a>
+          <a href="<?= base_url('') ?>" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="<?= base_url() ?>/Asset" class="nav-link">All Asset</a>
@@ -286,7 +286,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a href="pages/kanban.html" class="nav-link">
+              <a href="<?= base_url('Vendor') ?>" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
                 <p>
                   Vendor
