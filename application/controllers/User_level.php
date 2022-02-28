@@ -25,6 +25,9 @@ class User_level extends CI_Controller
 		parent::__construct();
 		$this->load->model('User_level_m');
 		// $this->load->model('Asset_m');
+		if (!$this->session->userdata('user_id')) {
+            redirect('Auth');
+        }
 	}
 
 	public function index()

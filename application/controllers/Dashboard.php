@@ -24,6 +24,9 @@ class Dashboard extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Asset_m');
+		if (!$this->session->userdata('user_id')) {
+            redirect('Auth');
+        }
 	}
 
 	public function index()

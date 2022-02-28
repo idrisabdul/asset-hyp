@@ -25,6 +25,10 @@ class Asset extends CI_Controller
 		parent::__construct();
 		$this->load->model('Asset_m');
 		$this->load->model('Status_cek_m');
+
+		if (!$this->session->userdata('user_id')) {
+            redirect('Auth');
+        }
 	}
 	public function index()
 	{

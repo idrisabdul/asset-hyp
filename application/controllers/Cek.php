@@ -11,6 +11,9 @@ class Cek extends CI_Controller
         $this->load->model('Asset_m');
         $this->load->model('Status_cek_m');
         $this->load->model('Penempatan_m');
+        if (!$this->session->userdata('user_id')) {
+            redirect('Auth');
+        }
     }
 
     public function add_cek($id_asset)
