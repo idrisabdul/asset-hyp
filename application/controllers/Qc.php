@@ -23,7 +23,9 @@ class Qc extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// $this->load->model('Asset_m');
+		$this->load->model('Asset_m');
+		$this->load->model('Status_cek_m');
+
 		if (!$this->session->userdata('user_id')) {
 			redirect('Auth');
 		}
@@ -33,6 +35,9 @@ class Qc extends CI_Controller
 	{
 		$sql = "SELECT * FROM kondisi INNER JOIN assets ON kondisi.id_asset=assets.asset_id JOIN penempatan ON kondisi.ex_user=penempatan.user_id WHERE kondisi_id IN ( SELECT MAX(kondisi_id) FROM kondisi GROUP BY id_asset) ";
 		$data['qc'] = $this->db->query($sql)->result();
+
+		$sql_perlu_qc = "SELECT * FROM assets WHERE status_kondisi = 5 AND kategori_id = 1";
+		$data['perlu_qc'] = $this->db->query($sql_perlu_qc)->result();
 		$this->template->load('template', 'qc/v_qc', $data);
 	}
 }

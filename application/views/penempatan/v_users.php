@@ -8,7 +8,7 @@
 
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <?= $this->session->flashdata('message'); ?>
+                    <?php if ($this->session->flashdata('message')); ?>
                     <table id="example1" class="table table-bordered table-sm table-hover">
                         <thead>
                             <tr>
@@ -32,7 +32,7 @@
                                     <td><?= $au['email'] ?></td>
                                     <td><?= $au['departemen'] ?></td>
                                     <td><?= $au['status'] ?></td>
-                                    <td> <button href="#" id="edituser" href="javascript:;" data-id="<?php echo $au['user_id'] ?>"  data-departemen="<?php echo $au['departemen'] ?>" data-nik="<?php echo $au['nik'] ?>" data-status="<?php echo $au['status'] ?>" data-email="<?php echo $au['email'] ?>" data-nama_lantai="<?php echo $au['nama_or_lantai'] ?>" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#edit"><i class="fa fa-edit mr-1"></i></button>
+                                    <td> <button href="#" id="edituser" href="javascript:;" data-id="<?php echo $au['user_id'] ?>" data-departemen="<?php echo $au['departemen'] ?>" data-nik="<?php echo $au['nik'] ?>" data-status="<?php echo $au['status'] ?>" data-email="<?php echo $au['email'] ?>" data-nama_lantai="<?php echo $au['nama_or_lantai'] ?>" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#edit"><i class="fa fa-edit mr-1"></i></button>
                                         <button onclick="deleteConfirm('<?= base_url('Penempatan/deleteUser/' . $au['user_id']) ?>')" class="btn btn-xs btn-danger" href="#!"><i class="fa fa-trash mr-1"></i></button>
                                     </td>
                                 </tr>

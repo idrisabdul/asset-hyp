@@ -35,7 +35,18 @@
                                  <div class="col-md-8">
 
                                      <input type="hidden" name="id" value="<?= $this->uri->segment('3') ?>">
-
+                                     <div>
+                                         <div class="col-sm-7">
+                                             <!-- <input type="hidden" class="form-control rounded-0" id="asset_number" name="asset_number_hdn" placeholder="Merk" value=""> -->
+                                         </div>
+                                     </div>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Asset Number</label>
+                                         <div class="col-sm-10">
+                                             <input type="text" class="form-control rounded-0" name="asset_number" placeholder="Asset Number" value="<?= $asset->asset_number ?>" disabled>
+                                             <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="<?= $asset->asset_number ?>">
+                                         </div>
+                                     </div>
                                      <div class="form-group row">
                                          <label for="merk" class="col-sm-2 col-form-label">Merk</label>
                                          <div class="col-sm-10">

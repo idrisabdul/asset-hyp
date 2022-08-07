@@ -10,6 +10,7 @@ class Asset_m extends CI_Model
         $this->db->from("assets");
         $this->db->join("kategori", "kategori.kategoris_id = assets.kategori_id");
         $this->db->join("penempatan", "penempatan.user_id = assets.id_user");
+        $this->db->join("asset_number", "asset_number.asset_num_id = assets.id_asset_number");
         $this->db->join("status_cek", "status_cek.status_cek_id = assets.status_kondisi");
         $this->db->join("vendor", "vendor.vendor_id = assets.kepemilikan");
         $this->db->order_by('asset_id', 'DESC');
@@ -52,9 +53,18 @@ class Asset_m extends CI_Model
     {
         $this->db->select("*");
         $this->db->from("kategori");
+        $this->db->where("type_kategori", 1);
         return $this->db->get()->result_array();
     }
 
+    public function AllSubKategori($type_kategori)
+    {
+        $this->db->select("*");
+        $this->db->from("kategori");
+        $this->db->where("type_kategori", $type_kategori);
+        return $this->db->get()->result_array();
+    }
+    
     public function AllVendor()
     {
         $this->db->select("*");

@@ -28,23 +28,31 @@
                         <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">History</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Tambah</a></li>
                     </ul>
-                    <ul class="nav nav-pills ml-auto p-2">
+                    <ul class="nav nav-pills ml-auto p-2 mr-4">
                         <form method="post" action="<?= base_url('Cek/update_status') ?>">
                             <input type="hidden" id="id_asset" name="id_asset" class="form-control" value="<?= $id ?>" />
                             <div class="form-group">
-                                <label for="exampleSelectBorder">Status</label>
+                                <div class="btn-group float-right">
+                                    <button class="btn btn-sm mx-2 mb-2 btn-rounded waves-effect waves-light btn-info">OK</button>
+                                </div>
 
-                                <select class="custom-select rounded-0" id="status" name="status">
-                                    <?php $s_kondisi =  $asset->status_kondisi ?>
-                                    <option value="<?= $asset->status_kondisi ?>">
-                                        <?php $sql = $this->db->query("SELECT * FROM status_cek WHERE status_cek_id = '$s_kondisi'")->row() ?>
-                                        <?= $sql->nama_status ?></option>
-                                    <?php foreach ($status as $s) { ?>
-                                        <option value="<?= $s['status_cek_id'] ?>"><?= $s['nama_status'] ?></option>
-                                    <?php } ?>
-                                </select>
+
+                                <div class="btn-group float-right">
+                                    <select class="custom-select rounded-0" id="status" name="status">
+                                        <?php $s_kondisi =  $asset->status_kondisi ?>
+                                        <option value="<?= $asset->status_kondisi ?>">
+                                            <?php $sql = $this->db->query("SELECT * FROM status_cek WHERE status_cek_id = '$s_kondisi'")->row() ?>
+                                            <?= $sql->nama_status ?></option>
+                                        <?php foreach ($status as $s) { ?>
+                                            <option value="<?= $s['status_cek_id'] ?>"><?= $s['nama_status'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="btn-group float-right mr-2">
+                                    <label for="exampleSelectBorder">Status</label>
+                                </div>
                             </div>
-                            <button class="btn btn-sm mx-2 mb-2 btn-rounded waves-effect waves-light btn-info">OK</button>
+
                         </form>
                     </ul>
                 </div><!-- /.card-header -->

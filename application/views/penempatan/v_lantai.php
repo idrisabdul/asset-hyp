@@ -8,7 +8,7 @@
 
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <?= $this->session->flashdata('message'); ?>
+                    <?php if ($this->session->flashdata('message')); ?>
                     <table id="example1" class="table table-bordered table-sm table-hover">
                         <thead>
                             <tr>

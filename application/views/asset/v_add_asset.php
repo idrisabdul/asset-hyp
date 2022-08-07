@@ -38,24 +38,50 @@
                                      <input type="hidden" name="kategori_id" value="<?= $this->uri->segment('3') ?>">
 
                                      <?php if ($id == 5) { ?>
-                                       
-                                        <div class="form-group row">
-                                            <label for="vendor" class="col-sm-2 col-form-label">Sub Kategori</label>
-                                            <div class="col-sm-10">
-                                                <select class="custom-select rounded-0" id="tipe_network" name="tipe_network">
-                                                    <option disabled selected value>-- Pilih --</option>
-                                                    <option value="Voip">Voip</option>
-                                                    <option value="Projector">Projector</option>
-                                                    <option value="Monitor">Monitor</option>
-                                                    <option value="SSD">SSD</option>
-                                                    <option value="Keyboard">Keyboard</option>
-                                                    <option value="RAM">RAM</option>
-                                                    <option value="NIC">NIC</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
+                                         <div class="form-group row">
+                                             <label for="vendor" class="col-sm-2 col-form-label">Sub Kategori</label>
+                                             <div class="col-sm-10">
+                                                 <select class="custom-select rounded-0" id="tipe_network" name="tipe_network">
+                                                     <!-- <option disabled selected value>-- Pilih --</option>
+                                                     <option value="Voip">Voip</option>
+                                                     <option value="Projector">Projector</option>
+                                                     <option value="Monitor">Monitor</option>
+                                                     <option value="SSD">SSD</option>
+                                                     <option value="Keyboard">Keyboard</option>
+                                                     <option value="RAM">RAM</option>
+                                                     <option value="NIC">NIC</option> -->
+                                                     <option disabled selected value>-- Pilih --</option>
+                                                     <?php foreach ($allsubkategori as $subkategori) { ?>
+                                                         <option value="<?= $subkategori['kategoris_id'] ?>"><?= $subkategori['nama_kategori'] ?></option>
+                                                     <?php } ?>
+                                                 </select>
+
+                                             </div>
+                                         </div>
                                      <?php } ?>
 
+                                     <div class="form-group row">
+                                         <label for="vendor" class="col-sm-2 col-form-label">Pilih Asset Number</label>
+                                         <div class="col-sm-10">
+                                             <select class="custom-select rounded-0" id="kepemilikan" name="kepemilikan">
+                                                 <option disabled selected value>-- Pilih --</option>
+                                                 <?php foreach ($allasset_number as $an) { ?>
+                                                     <option value="<?= $an->asset_num_id ?>"><?= $an->asset_number_name ?></option>
+                                                 <?php } ?>
+                                             </select>
+                                         </div>
+                                     </div>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Asset Number</label>
+                                         <div class="col-sm-7">
+                                             <input type="text" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="<?= $urut ?>">
+                                             <input type="hidden" class="form-control rounded-0" id="asset_number" name="asset_number_hdn" placeholder="Merk" value="">
+                                         </div>
+                                         <div class="col-sm-3">
+                                             <input type="button" class="btn btn-info" id="asset_number_btn" value="Buat Number Asset Baru">
+                                         </div>
+                                     </div>
                                      <div class="form-group row">
                                          <label for="merk" class="col-sm-2 col-form-label">Merk</label>
                                          <div class="col-sm-10">
@@ -166,3 +192,11 @@
      </div><!-- /.container-fluid -->
  </section>
  <!-- /.content -->
+
+ <script type="text/javascript">
+     $(document).ready(function() {
+         $('#asset_number_btn').click(function() {
+             $("#asset_number_txt").val('');
+         });
+     });
+ </script>

@@ -5,10 +5,10 @@
                 <div class="card-header">
                     <button data-toggle="modal" data-target="#addModal" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add Users</button>
                 </div>
-                
+
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <?= $this->session->flashdata('message'); ?>
+                    <?php if ($this->session->flashdata('message')); ?>
                     <table id="example1" class="table table-bordered table-sm table-hover">
                         <thead>
                             <tr>
@@ -26,9 +26,9 @@
                                     <td><?= $no++ ?></td>
                                     <td><?= ucfirst($ul['username']) ?></td>
                                     <td><?= ucfirst($ul['user_role']) ?></td>
-                                    <td> <button  class="btn btn-xs btn-warning" data-toggle="modal"><i class="fa fa-edit mr-1"></i></button>
-                                        <button href="#!"  class="btn btn-xs btn-info"><i class="fa fa-eye mr-1"></i></button>
-                                        <button href="#!"  class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                    <td> <button class="btn btn-xs btn-warning" data-toggle="modal"><i class="fa fa-edit mr-1"></i></button>
+                                        <button href="#!" class="btn btn-xs btn-info"><i class="fa fa-eye mr-1"></i></button>
+                                        <button href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -107,4 +107,3 @@
 <script src="<?= base_url() ?>assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="<?= base_url() ?>assets/plugins/toastr/toastr.min.js"></script>
-

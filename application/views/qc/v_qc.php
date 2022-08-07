@@ -1,16 +1,9 @@
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-           
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Cek</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+<div class="container-fluid">
+    <div class="row mb-2">
+
+    </div>
+</div><!-- /.container-fluid -->
+
 
 <!-- Main content -->
 <section class="content">
@@ -19,65 +12,62 @@
         <div class="col-12">
             <!-- Custom Tabs -->
             <div class="card">
-                <div class="card-header d-flex p-0">
-                  
-                    <ul class="nav nav-pills ml-auto p-2">
-                       
-                    </ul>
+                <div class="card-header">
+                    <h3 class="card-title">Asset Hypernet</h3>
+                    <div class="btn-group float-right">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addQc">
+                            Tambah
+                        </button>
+                    </div>
                 </div><!-- /.card-header -->
                 <div class="card-body">
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1">
-                            <div class="card-body">
-                                <?= $this->session->flashdata('message'); ?>
-                                <table id="example1" class="table table-bordered table-sm table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Ex User - SN</th>
-                                            <th>Fisik</th>
-                                            <th>Harddrive</th>
-                                            <th>Keyboard</th>
-                                            <th>Speaker</th>
-                                            <th>Port</th>
-                                            <th>Baterai</th>
-                                            <th>Keterangan</th>
-                                            <th>Tanggal</th>
-                                            <th>Pemeriksa</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no = 1; ?>
-                                        <?php foreach ($qc as $kon) { ?>
-                                            <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $kon->nama_or_lantai ?> - <?= $kon->serial_number ?></td>
-                                                <td><?= $kon->fisik ?></td>
-                                                <td><?= $kon->harddrive ?></td>
-                                                <td><?= $kon->keyboard ?></td>
-                                                <td><?= $kon->speaker ?></td>
-                                                <td><?= $kon->port ?></td>
-                                                <td><?= $kon->baterai ?></td>
-                                                <td><?= $kon->keterangan ?></td>
-                                                <td><?= $kon->tgl_pengecekkan ?></td>
-                                                <td><?= $kon->nama_pengecek ?></td>
-                                                <td> <?= anchor('Cek/edit_cek/' . $kon->kondisi_id, '<button type="button" href="#" class="btn btn-xs btn-warning">
+                    <?php if ($this->session->flashdata('message')); ?>
+                    <table id="example1" class="table table-bordered table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Eks Karyawan</th>
+                                <th>Serial Number</th>
+                                <th>Fisik</th>
+                                <th>Harddrive</th>
+                                <th>Keyboard</th>
+                                <th>Speaker</th>
+                                <th>Port</th>
+                                <th>Baterai</th>
+                                <th>Keterangan</th>
+                                <th>Tanggal</th>
+                                <th>Pemeriksa</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1; ?>
+                            <?php foreach ($qc as $kon) { ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $kon->nama_or_lantai ?></td>
+                                    <td><?= $kon->serial_number ?></td>
+                                    <td><?= $kon->fisik ?></td>
+                                    <td><?= $kon->harddrive ?></td>
+                                    <td><?= $kon->keyboard ?></td>
+                                    <td><?= $kon->speaker ?></td>
+                                    <td><?= $kon->port ?></td>
+                                    <td><?= $kon->baterai ?></td>
+                                    <td><?= $kon->keterangan ?></td>
+                                    <td><?= $kon->tgl_pengecekkan ?></td>
+                                    <td><?= $kon->nama_pengecek ?></td>
+                                    <td> <?= anchor('Cek/edit_cek/' . $kon->kondisi_id, '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                                    <button href="#" data-id="<?php echo $kon->kondisi_id ?>" data-target="#deleteModal" id="hapus"  class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash mr-1"></i></button>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
+                                        <button href="#" data-id="<?php echo $kon->kondisi_id ?>" data-target="#deleteModal" id="hapus" class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash mr-1"></i></button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
 
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.tab-pane -->
-                     
-                    </div>
-                    <!-- /.tab-content -->
-                </div><!-- /.card-body -->
+                    </table>
+                </div>
+                <!-- /.tab-pane -->
             </div>
             <!-- ./card -->
         </div>
@@ -85,91 +75,72 @@
     </div>
     <!-- /.row -->
 
-    <!-- Default box -->
-    <!-- <div class="card">
-        <div class="card-body row">
-            <div class="col-5 text-center d-flex align-items-center justify-content-center">
-                <div class="">
-                    <h2>Admin<strong>LTE</strong></h2>
-                    <p class="lead mb-5">123 Testing Ave, Testtown, 9876 NA<br>
-                        Phone: +1 234 56789012
-                    </p>
-                </div>
-            </div>
-            <div class="col-7">
-                <div class="form-group">
-                    <label for="inputName">Tanggal Pengecekkan</label>
-                    <input type="date" id="tgl" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputName">Fisik</label>
-                    <input type="text" id="Fisik" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputName">Harddisk</label>
-                    <input type="text" id="inputName" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputName">LCD</label>
-                    <input type="text" id="inputName" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail">Keyboard</label>
-                    <input type="email" id="inputEmail" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputSubject">Speaker</label>
-                    <input type="text" id="inputSubject" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputMessage">Port USB dan LAN</label>
-                    <input type="text" id="inputSubject" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputMessage">Baterai</label>
-                    <input type="text" id="inputSubject" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputMessage">Touchpad</label>
-                    <input type="text" id="inputSubject" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputMessage">Charger</label>
-                    <input type="text" id="inputSubject" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="inputMessage">Keterangan</label>
-                    <textarea id="inputMessage" class="form-control" rows="4"></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Send message">
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 </section>
 <!-- /.content -->
 
 
-<!-- DELETE MODAL -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="addQc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form action="<?= base_url('Cek/delete') ?>" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Anda yakin?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                        <input type="hidden" name="id_asset" value="<?= $this->uri->segment('3') ?>">
-                        <input type="hidden" name="kondisi_id" id="kondisiid">
-                    </button>
-                </div>
-                <div class="modal-body">Data yang dihapus tidak akan bisa dikembalikan.</div>
-                <div class="modal-footer">
-                    <button class="btn" type="button" data-dismiss="modal">Batal</button>
-                    <button type="submit" class=" btn btn-danger">Hapus</button>
-            </form>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Data Perlu QC</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="example1" class="table table-bordered table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Eks Karyawan</th>
+                            <th>Merk Barang</th>
+                            <th>Serial Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1; ?>
+                        <?php foreach ($perlu_qc as $qc) { ?>
+                            <?php $id_asset =  $qc->asset_id ?>
+
+
+                            <tr>
+                                <td><?= $no++ ?></td>
+                                <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
+                                <?php
+                                $row_history = $this->db->query($sql)->row_array();
+                                if ($row_history == null) {
+                                    $user_id = 0;
+                                    $tgl = "null";
+                                } else {
+                                    $user_id = $row_history['id_users'];
+                                    $tgl = $row_history['tgl'];
+                                }
+
+                                $sql_penempatan = "SELECT * FROM penempatan WHERE user_id = $user_id";
+                                $row_penempatan = $this->db->query($sql_penempatan)->row_array();
+                                if ($row_penempatan == null) {
+                                    $user = $user_id;
+                                } else {
+                                    $user = $row_penempatan['nama_or_lantai'];
+                                }
+                                ?>
+                                <td><?= $user ?></td>
+                                <td><?= $qc->type ?></td>
+                                <td><?= $qc->serial_number ?></td>
+                                <td><?= anchor('cek/add_cek/' . $qc->asset_id, '<button type="button" class="btn btn-xs btn-info">Pilih
+                                                    </button>') ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+
+                </table>
+            </div>
+
         </div>
     </div>
 </div>

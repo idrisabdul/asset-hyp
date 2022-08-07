@@ -6,7 +6,7 @@
                     <h3 class="card-title">Asset Hypernet</h3>
                     <!-- <a href="<?= base_url('Asset/add_asset') ?>" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</a> -->
                     <div class="btn-group float-right">
-                        <button type="button" class="btn btn-default">Tambah</button>
+                        <button type="button" class="btn btn-default">Action</button>
                         <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
@@ -20,13 +20,19 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <?= $this->session->flashdata('message'); ?>
+                    <?php
+                    if ($this->session->flashdata('message')) {
+                        echo $this->session->flashdata('message');
+                    } else {
+                        echo '';
+                    } ?>
                     <?php $kat = $this->uri->segment('3') ?>
                     <?php if ($kat == null) { ?>
                         <table id="example1" class="table table-bordered table-sm table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Asset Number</th>
                                     <th>Kategori</th>
                                     <th>Merk</th>
                                     <th>Type</th>
@@ -38,6 +44,7 @@
                                     <th>Penyimpanan</th>
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
+                                    <th>Tanggal diberikan</th>
                                     <th>Posisi</th>
                                     <th>Kondisi</th>
                                     <th>Action</th>
@@ -46,9 +53,11 @@
                             <tbody>
                                 <?php $no = 1; ?>
                                 <?php foreach ($allasset as $asset) { ?>
+                                    <?php $id_asset =  $asset['asset_id'] ?>
 
                                     <tr>
                                         <td><?= $no++ ?></td>
+                                        <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
                                         <td><?= $asset['type'] ?></td>
@@ -60,12 +69,34 @@
                                         <td><?= $asset['type_penyimpanan'] ? $asset['type_penyimpanan'] : '-';  ?></td>
                                         <td><?= $asset['serial_number'] ?></td>
                                         <td><?= $asset['nama_vendor'] ?></td>
-                                        <td><?php if ($asset['id_user'] > 1) { ?>
+                                        <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
+                                        <?php
+                                        $row_history = $this->db->query($sql)->row_array();
+                                        if ($row_history == null) {
+                                            $user_id = 0;
+                                            $tgl = "null";
+                                        } else {
+                                            $user_id = $row_history['id_users'];
+                                            $tgl = $row_history['tgl'];
+                                        }
+
+                                        ?>
+                                        <?php
+                                        $sql_penempatan = "SELECT * FROM penempatan WHERE user_id = $user_id";
+                                        $row_penempatan = $this->db->query($sql_penempatan)->row_array();
+                                        if ($row_penempatan == null) {
+                                            $user = $user_id;
+                                        } else {
+                                            $user = $row_penempatan['nama_or_lantai'];
+                                        }
+                                        ?>
+                                        <td><?= $tgl ?></td>
+                                        <td><?php if ($user_id > 1) { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
-                                                    <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
                                             <?php } else { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
                                             <?php } ?>
                                         </td>
                                         <td>
@@ -91,7 +122,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kategori</th>
+                                    <th>Asset Number</th>
                                     <th>Merk</th>
                                     <th>Type</th>
                                     <th>Processor</th>
@@ -107,10 +138,11 @@
                             <tbody>
                                 <?php $no = 1; ?>
                                 <?php foreach ($allasset as $asset) { ?>
+                                    <?php $id_asset =  $asset['asset_id'] ?>
 
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= ucfirst($asset['nama_kategori']) ?></td>
+                                        <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
                                         <td><?= $asset['type'] ?></td>
                                         <td><?= $asset['processor'] ?></td>
@@ -118,12 +150,33 @@
                                         <td><?= $asset['type_penyimpanan'] ? $asset['type_penyimpanan'] : '-';  ?></td>
                                         <td><?= $asset['serial_number'] ?></td>
                                         <td><?= $asset['nama_vendor'] ?></td>
-                                        <td><?php if ($asset['id_user'] > 1) { ?>
+                                        <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
+                                        <?php
+                                        $row_history = $this->db->query($sql)->row_array();
+                                        if ($row_history == null) {
+                                            $user_id = 0;
+                                            $tgl = "null";
+                                        } else {
+                                            $user_id = $row_history['id_users'];
+                                            $tgl = $row_history['tgl'];
+                                        }
+
+                                        ?>
+                                        <?php
+                                        $sql_penempatan = "SELECT * FROM penempatan WHERE user_id = $user_id";
+                                        $row_penempatan = $this->db->query($sql_penempatan)->row_array();
+                                        if ($row_penempatan == null) {
+                                            $user = $user_id;
+                                        } else {
+                                            $user = $row_penempatan['nama_or_lantai'];
+                                        }
+                                        ?>
+                                        <td><?php if ($user_id > 1) { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
-                                                    <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
                                             <?php } else { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
                                             <?php } ?>
                                         </td>
                                         <td>
@@ -170,7 +223,7 @@
                                         <td><?= $asset['type'] ?></td>
                                         <td><?= $asset['serial_number'] ?></td>
                                         <td><?= $asset['nama_vendor'] ?></td>
-                                        <td><?php if ($asset['id_user'] > 1) { ?>
+                                        <td><?php if ($asset['id_users'] > 1) { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
                                                     <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } else { ?>
@@ -233,7 +286,7 @@
                                         <td><?= $asset['type_penyimpanan'] ? $asset['type_penyimpanan'] : '-';  ?></td>
                                         <td><?= $asset['serial_number'] ?></td>
                                         <td><?= $asset['nama_vendor'] ?></td>
-                                        <td><?php if ($asset['id_user'] > 1) { ?>
+                                        <td><?php if ($asset['id_users'] > 1) { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
                                                     <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } else { ?>
@@ -241,7 +294,7 @@
                                                     <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } ?>
                                         </td>
-                                       
+
                                         <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
                                             <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
@@ -289,7 +342,7 @@
                                         <td><?= $asset['type_penyimpanan'] ? $asset['type_penyimpanan'] : '-';  ?></td>
                                         <td><?= $asset['serial_number'] ?></td>
                                         <td><?= $asset['nama_vendor'] ?></td>
-                                        <td><?php if ($asset['id_user'] > 1) { ?>
+                                        <td><?php if ($asset['id_users'] > 1) { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
                                                     <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } else { ?>
