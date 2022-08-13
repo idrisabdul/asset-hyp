@@ -64,7 +64,7 @@
                                      <div class="form-group row">
                                          <label for="vendor" class="col-sm-2 col-form-label">Pilih Asset Number</label>
                                          <div class="col-sm-10">
-                                             <select class="custom-select rounded-0" id="kepemilikan" name="kepemilikan">
+                                             <select class="custom-select rounded-0" id="select_ass_num" name="select_ass_num">
                                                  <option disabled selected value>-- Pilih --</option>
                                                  <?php foreach ($allasset_number as $an) { ?>
                                                      <option value="<?= $an->asset_num_id ?>"><?= $an->asset_number_name ?></option>
@@ -75,8 +75,10 @@
                                      <div class="form-group row">
                                          <label for="merk" class="col-sm-2 col-form-label">Asset Number</label>
                                          <div class="col-sm-7">
-                                             <input type="text" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="<?= $urut ?>">
-                                             <input type="hidden" class="form-control rounded-0" id="asset_number" name="asset_number_hdn" placeholder="Merk" value="">
+                                             <input type="text" class="form-control rounded-0" id="asset_number_txtowe" name="dummy" placeholder="Asset Number" value="wait" disabled>
+                                             <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="">
+                                             <input type="hidden" class="form-control rounded-0" id="id_asset_number" name="id_asset_number" placeholder="Merk" value="">
+                                             <input type="hidden" class="form-control rounded-0" id="numbering" name="numbering" placeholder="Merk" value="">
                                          </div>
                                          <div class="col-sm-3">
                                              <input type="button" class="btn btn-info" id="asset_number_btn" value="Buat Number Asset Baru">
@@ -198,5 +200,42 @@
          $('#asset_number_btn').click(function() {
              $("#asset_number_txt").val('');
          });
+     });
+
+     $(document).ready(function() {
+
+         $('#select_ass_num').change(function() {
+             var id = $(this).val();
+            //  var string_text = $(this).text();
+             // alert(id);
+             var string = $("#select_ass_num option:selected").text();
+
+             $.ajax({
+                 url: "<?php echo site_url('Asset/get_lastid_asset_number'); ?>",
+                 method: "POST",
+                 data: {
+                     id: id
+                 },
+                 async: true,
+                 dataType: 'json',
+                 success: function(data) {
+
+                     //  var html = '';
+                     //  var i;
+                     //  for (i = 0; i < data.length; i++) {
+                     //      html += '<option value=' + data[i].subcategory_id + '>' + data[i].subcategory_name + '</option>';
+                     //  }
+                     //  $('#sub_category').html(html);
+                     $("#asset_number_txt").val(string +'-'+ data);
+                     $("#asset_number_txtowe").val(string +'-'+ data);
+                     $("#numbering").val(data);
+                     $("#id_asset_number").val(id);
+
+                    //  alert(s);
+                 }
+             });
+             return false;
+         });
+
      });
  </script>

@@ -130,6 +130,7 @@
                                     <th>Penyimpanan</th>
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
+                                    <th>Tanggal diberikan</th>
                                     <th>Posisi</th>
                                     <th>Kondisi</th>
                                     <th>Action</th>
@@ -162,6 +163,7 @@
                                         }
 
                                         ?>
+                                        <td><?= $tgl ?></td>
                                         <?php
                                         $sql_penempatan = "SELECT * FROM penempatan WHERE user_id = $user_id";
                                         $row_penempatan = $this->db->query($sql_penempatan)->row_array();

@@ -86,7 +86,8 @@ class Asset extends CI_Controller
 	public function InsertAsset()
 	{
 		$data = [
-			'asset_number' => $this->input->post('asset_number_txt'),
+			'id_asset_number' => $this->input->post('id_asset_number'),
+			'numbering' => $this->input->post('numbering'),
 			'kategori_id' => $this->input->post('kategori_id'),
 			'merk' => $this->input->post('merk'),
 			'type' => $this->input->post('type'),
@@ -149,4 +150,24 @@ class Asset extends CI_Controller
 		$this->db->delete('assets', ['asset_id' => $id]);
 		redirect('Asset');
 	}
+
+	function get_lastid_asset_number(){
+        $id_asset_number = $this->input->post('id',TRUE);
+        $last_number_asset = $this->db->query("SELECT numbering FROM assets WHERE id_asset_number = $id_asset_number ORDER BY asset_id DESC LIMIT 1;")->row();
+
+		$last_int_number = (int)$last_number_asset->numbering;
+
+		$last_number = $last_int_number + 1;
+		if ($last_number <= 9) {
+			$data = "000" . $last_number;
+		} elseif ($last_number >= 9 && $last_number < 99) {
+			$data = "00" . $last_number;
+		} elseif ($last_number >= 99 && $last_number < 999) {
+			$data = "0" . $last_number;
+		} elseif ($last_number >= 9999) {
+			$data =  $last_number;
+		}
+
+        echo json_encode($data);
+    }
 }
