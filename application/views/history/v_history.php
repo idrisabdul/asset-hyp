@@ -1,4 +1,18 @@
-`<section class="content-header">
+<script language="javascript">
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+
+<section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
@@ -7,7 +21,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">User Profile</li>
+          <li class="breadcrumb-item active">Detail Asset</li>
         </ol>
       </div>
     </div>
@@ -19,9 +33,10 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">
-
+        
         <!-- Profile Image -->
-        <div class="card card-primary card-outline">
+        <div class="card card-primary card-outline" id="printableArea">
+          <div class="col-md-4"><input type="button" class="btn btn-outline-danger my-2" onclick="printDiv('printableArea')" value="Cetak" /></div>
           <div class="card-body box-profile">
             <div class="text-center">
               <!-- <img class="profile-user-img img-fluid img-circle" src="<?= base_url() ?>assets/dist/img/lo.jpg" alt="User profile picture"> -->
@@ -32,6 +47,12 @@
             <p class="text-muted text-center"><?= $asset->serial_number ?></p>
 
             <ul class="list-group list-group-unbordered mb-3">
+              <li class="list-group-item">
+                <b>Asset Number</b> <a class="float-right"><?= $asset->asset_number_name ?>-<?= $asset->numbering ?></a>
+              </li>
+              <li class="list-group-item">
+                <b>QR Code</b> <a class="float-right"><img src="<?= base_url('Asset/qrcode_detail/'. $asset->asset_number_name ."-".$asset->numbering) ?>" alt=""></a>
+              </li>
               <li class="list-group-item">
                 <b>RAM</b> <a class="float-right"><?= $asset->ram ?></a>
               </li>

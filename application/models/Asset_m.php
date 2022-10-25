@@ -46,7 +46,11 @@ class Asset_m extends CI_Model
     {
         $this->db->select("*");
         $this->db->from("assets");
+        $this->db->join("kategori", "kategori.kategoris_id = assets.kategori_id");
+        $this->db->join("penempatan", "penempatan.user_id = assets.id_user");
         $this->db->join("asset_number", "asset_number.asset_num_id = assets.id_asset_number");
+        $this->db->join("status_cek", "status_cek.status_cek_id = assets.status_kondisi");
+        $this->db->join("vendor", "vendor.vendor_id = assets.kepemilikan");
         $this->db->where("asset_id", $asset_id);
         return $this->db->get()->row();
     }

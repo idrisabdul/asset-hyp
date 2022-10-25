@@ -190,4 +190,16 @@ class Asset extends CI_Controller
 			$margin = 2
 		);
 	}
+
+
+	function qrcode_detail($kode)
+	{
+		QRcode::png(
+			$kode,
+			$outfile = false,
+			$level = QR_ECLEVEL_H,
+			$size = 7,
+			$margin = 2
+		);
+	}
 }
