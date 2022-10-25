@@ -86,22 +86,31 @@
         <div class="row">
             <!-- Left col -->
             <section class="col-lg-7 connectedSortable">
-                <!-- Custom tabs (Charts with tabs)-->
-                <div class="card">
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Asset Chart</h3>
 
-                    <div class="card-body">
-
-                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                            <canvas id="myChart" height="120" style="height: 120px;"></canvas>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
-
-                    </div><!-- /.card-body -->
+                    </div>
+                    <div class="card-body">
+                        <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
+                <!-- /.card -->
                 <!-- /.card -->
 
 
 
-              
+
                 <!-- /.card -->
             </section>
             <!-- /.Left col -->
@@ -205,56 +214,75 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </section>
+<?php foreach ($kategori as $kat) { ?>
+    <?= $kat->nama_kategori ?>
+<?php } ?>
 
 <!-- ChartJS -->
 <script src="<?= base_url() ?>assets/plugins/chart.js/Chart.min.js"></script>
 
-<!-- FLOT CHARTS -->
-<script src="<?= base_url() ?>assets/plugins/flot/jquery.flot.js"></script>
-<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
-<script src="<?= base_url() ?>assets/plugins/flot/plugins/jquery.flot.resize.js"></script>
-<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-<script src="<?= base_url() ?>assets/plugins/flot/plugins/jquery.flot.pie.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url() ?>assets/dist/js/demo.js"></script>
 
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="<?= base_url() ?>assets/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="<?= base_url() ?>assets/plugins/raphael/raphael.min.js"></script>
+<script src="<?= base_url() ?>assets/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="<?= base_url() ?>assets/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<!-- ChartJS -->
+<script src="<?= base_url() ?>assets/plugins/chart.js/Chart.min.js"></script>
+
+<!-- Bootstrap 4 -->
+<script src="<?= base_url() ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="<?= base_url() ?>assets/plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?= base_url() ?>assets/dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: [<?php foreach ($statuss as $ls) { echo '"' . $ls->ns . '",' ; } ?> ],
+    $(function() {
+        /* ChartJS
+         * -------
+         * Here we will create a few charts using ChartJS
+         */
+
+
+        //-------------
+        //- DONUT CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+        var donutData = {
+            labels: [
+                <?php foreach ($kategori as $kat) { ?>
+                    '<?= $kat->nama_kategori ?>',
+                <?php } ?>
+            ],
             datasets: [{
-                label: '# of Votes',
-                data: [<?php foreach ($status as $s) { echo '"' . $s['COUNT(status_kondisi)'] . '",'; } ?> ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                data: [700, 500, 400, 600, 300, 100],
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
             }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
         }
-    });
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        })
+
+
+
+
+
+
+
+    })
 </script>

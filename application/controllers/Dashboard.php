@@ -35,6 +35,7 @@ class Dashboard extends CI_Controller
 		$data['ttl_printer'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 2")->num_rows();
 		$data['ttl_network'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 3")->num_rows();
 		$data['ttl_lainnya'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 5")->num_rows();
+		$data['kategori'] = $this->db->query("SELECT * FROM kategori WHERE type_kategori = 1")->result();
 
 		$data['status'] = $this->db->query("SELECT status_kondisi, COUNT(status_kondisi) FROM assets WHERE kategori_id = 1 GROUP BY status_kondisi")->result_array();
 		$data['statuss'] = $this->db->query("SELECT * FROM assets LEFT JOIN status_cek ON status_cek.status_cek_id = assets.status_kondisi WHERE kategori_id = 1 GROUP BY status_cek.nama_status")->result_array();

@@ -170,6 +170,18 @@
                                              </select>
                                          </div>
                                      </div>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Kondisi Label</label>
+                                         <div class="col-sm-10">
+                                             <input type="text" class="form-control rounded-0" id="kondisi_label" name="kondisi_label" placeholder="kondisi label">
+                                         </div>
+                                     </div>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pembelian</label>
+                                         <div class="col-sm-10">
+                                             <input type="date" class="form-control rounded-0" id="tgl_penambahan" name="tgl_penambahan" placeholder="Tanggal Pembelian">
+                                         </div>
+                                     </div>
                                  </div>
                                  <div class="col-md-2"></div>
                              </div>
@@ -219,17 +231,12 @@
                  async: true,
                  dataType: 'json',
                  success: function(data) {
-
-                     //  var html = '';
-                     //  var i;
-                     //  for (i = 0; i < data.length; i++) {
-                     //      html += '<option value=' + data[i].subcategory_id + '>' + data[i].subcategory_name + '</option>';
-                     //  }
-                     //  $('#sub_category').html(html);
+                    
                      $("#asset_number_txt").val(string +'-'+ data);
                      $("#asset_number_txtowe").val(string +'-'+ data);
                      $("#numbering").val(data);
                      $("#id_asset_number").val(id);
+                     
 
                     //  alert(s);
                  }

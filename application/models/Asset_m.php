@@ -46,6 +46,7 @@ class Asset_m extends CI_Model
     {
         $this->db->select("*");
         $this->db->from("assets");
+        $this->db->join("asset_number", "asset_number.asset_num_id = assets.id_asset_number");
         $this->db->where("asset_id", $asset_id);
         return $this->db->get()->row();
     }

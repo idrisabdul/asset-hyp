@@ -32,6 +32,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Qrcode</th>
                                     <th>Asset Number</th>
                                     <th>Kategori</th>
                                     <th>Merk</th>
@@ -46,7 +47,8 @@
                                     <th>Kepemilikan</th>
                                     <th>Tanggal diberikan</th>
                                     <th>Posisi</th>
-                                    <th>Kondisi</th>
+                                    <th>Kondisi Barang</th>
+                                    <th>Kondisi Label</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -57,6 +59,7 @@
 
                                     <tr>
                                         <td><?= $no++ ?></td>
+                                        <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td>
                                         <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
@@ -105,8 +108,12 @@
                                                 <?= anchor('cek/add_cek/' . $asset['asset_id'], '<button type="button" class="btn btn-xs btn-primary">' . $asset['nama_status'] . '
                                                     </button>') ?>
                                                 <!-- <a href="<?= base_url('cek/add_cek/') ?>" >View</a> -->
+                                            <?php } else { ?>
+
+                                                <?= $asset['nama_status'] ?>
                                             <?php } ?>
                                         </td>
+                                        <td><?= $asset['kondisi_label'] ?></td>
                                         <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
                                             <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
@@ -132,7 +139,8 @@
                                     <th>Kepemilikan</th>
                                     <th>Tanggal diberikan</th>
                                     <th>Posisi</th>
-                                    <th>Kondisi</th>
+                                    <th>Kondisi Barang</th>
+                                    <th>Kondisi Label</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -187,8 +195,12 @@
                                                 <?= anchor('cek/add_cek/' . $asset['asset_id'], '<button type="button" class="btn btn-xs btn-primary">' . $asset['nama_status'] . '
                                                     </button>') ?>
                                                 <!-- <a href="<?= base_url('cek/add_cek/') ?>" >View</a> -->
+                                            <?php } else { ?>
+
+                                                <?= $asset['nama_status'] ?>
                                             <?php } ?>
                                         </td>
+                                        <td><?= $asset['kondisi_label'] ?></td>
                                         <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
                                             <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
@@ -204,33 +216,59 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Qrcode</th>
+                                    <th>Asset Number</th>
                                     <th>Kategori</th>
                                     <th>Merk</th>
                                     <th>Type</th>
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
                                     <th>Posisi</th>
-                                    <th>Kondisi</th>
+                                    <th>Kondisi Barang</th>
+                                    <th>Kondisi Label</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1; ?>
                                 <?php foreach ($allasset as $asset) { ?>
-
+                                    <?php $id_asset =  $asset['asset_id'] ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
+                                        <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td>
+                                        <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
                                         <td><?= $asset['type'] ?></td>
                                         <td><?= $asset['serial_number'] ?></td>
                                         <td><?= $asset['nama_vendor'] ?></td>
-                                        <td><?php if ($asset['id_users'] > 1) { ?>
+                                        <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
+                                        <?php
+                                        $row_history = $this->db->query($sql)->row_array();
+                                        if ($row_history == null) {
+                                            $user_id = 0;
+                                            $tgl = "null";
+                                        } else {
+                                            $user_id = $row_history['id_users'];
+                                            $tgl = $row_history['tgl'];
+                                        }
+
+                                        ?>
+                                        <?php
+                                        $sql_penempatan = "SELECT * FROM penempatan WHERE user_id = $user_id";
+                                        $row_penempatan = $this->db->query($sql_penempatan)->row_array();
+                                        if ($row_penempatan == null) {
+                                            $user = $user_id;
+                                        } else {
+                                            $user = $row_penempatan['nama_or_lantai'];
+                                        }
+                                        ?>
+                                        <td><?php if ($user_id > 1) { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
-                                                    <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
                                             <?php } else { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
                                             <?php } ?>
                                         </td>
                                         <td>
@@ -239,8 +277,12 @@
                                                 <?= anchor('cek/add_cek/' . $asset['asset_id'], '<button type="button" class="btn btn-xs btn-primary">' . $asset['nama_status'] . '
                                                     </button>') ?>
                                                 <!-- <a href="<?= base_url('cek/add_cek/') ?>" >View</a> -->
+                                            <?php } else { ?>
+
+                                                <?= $asset['nama_status'] ?>
                                             <?php } ?>
                                         </td>
+                                        <td><?= $asset['kondisi_label'] ?></td>
                                         <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
                                             <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
@@ -268,6 +310,8 @@
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
                                     <th>Posisi</th>
+                                    <th>Kondisi Barang</th>
+                                    <th>Kondisi Label</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -296,7 +340,18 @@
                                                     <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } ?>
                                         </td>
+                                        <td>
+                                            <?php if ($asset['kategori_id'] == 1) { ?>
 
+                                                <?= anchor('cek/add_cek/' . $asset['asset_id'], '<button type="button" class="btn btn-xs btn-primary">' . $asset['nama_status'] . '
+                                                    </button>') ?>
+                                                <!-- <a href="<?= base_url('cek/add_cek/') ?>" >View</a> -->
+                                            <?php } else { ?>
+
+                                                <?= $asset['nama_status'] ?>
+                                            <?php } ?>
+                                        </td>
+                                        <td><?= $asset['kondisi_label'] ?></td>
                                         <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
                                             <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
@@ -352,6 +407,101 @@
                                                     <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } ?>
                                         </td>
+                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                                    <i class="fa fa-pen mr-1"></i></button>') ?>
+                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+
+                        </table>
+                    <?php } else { ?>
+                        <table id="example1" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Asset Number</th>
+                                    <th>Kategori</th>
+                                    <th>Merk</th>
+                                    <th>Type</th>
+                                    <th>Processor</th>
+                                    <th>Network</th>
+                                    <th>Total Port</th>
+                                    <th>Transmisi</th>
+                                    <th>RAM</th>
+                                    <th>Penyimpanan</th>
+                                    <th>S/N</th>
+                                    <th>Kepemilikan</th>
+                                    <th>Tanggal diberikan</th>
+                                    <th>Posisi</th>
+                                    <th>Kondisi Barang</th>
+                                    <th>Kondisi Label</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no = 1; ?>
+                                <?php foreach ($allasset as $asset) { ?>
+                                    <?php $id_asset =  $asset['asset_id'] ?>
+
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
+                                        <td><?= ucfirst($asset['nama_kategori']) ?></td>
+                                        <td><?= ucfirst($asset['merk']) ?></td>
+                                        <td><?= $asset['type'] ?></td>
+                                        <td><?= $asset['processor'] ?></td>
+                                        <td><?= $asset['tipe_network'] ?></td>
+                                        <td><?= $asset['ttl_port'] ?></td>
+                                        <td><?= $asset['transmisi'] ?></td>
+                                        <td><?= $asset['ram'] != null ? $asset['ram'] : '-'; ?></td>
+                                        <td><?= $asset['type_penyimpanan'] ? $asset['type_penyimpanan'] : '-';  ?></td>
+                                        <td><?= $asset['serial_number'] ?></td>
+                                        <td><?= $asset['nama_vendor'] ?></td>
+                                        <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
+                                        <?php
+                                        $row_history = $this->db->query($sql)->row_array();
+                                        if ($row_history == null) {
+                                            $user_id = 0;
+                                            $tgl = "null";
+                                        } else {
+                                            $user_id = $row_history['id_users'];
+                                            $tgl = $row_history['tgl'];
+                                        }
+
+                                        ?>
+                                        <?php
+                                        $sql_penempatan = "SELECT * FROM penempatan WHERE user_id = $user_id";
+                                        $row_penempatan = $this->db->query($sql_penempatan)->row_array();
+                                        if ($row_penempatan == null) {
+                                            $user = $user_id;
+                                        } else {
+                                            $user = $row_penempatan['nama_or_lantai'];
+                                        }
+                                        ?>
+                                        <td><?= $tgl ?></td>
+                                        <td><?php if ($user_id > 1) { ?>
+                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
+                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
+                                            <?php } else { ?>
+                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
+                                            <?php } ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($asset['kategori_id'] == 1) { ?>
+
+                                                <?= anchor('cek/add_cek/' . $asset['asset_id'], '<button type="button" class="btn btn-xs btn-primary">' . $asset['nama_status'] . '
+                                                    </button>') ?>
+                                                <!-- <a href="<?= base_url('cek/add_cek/') ?>" >View</a> -->
+                                            <?php } else { ?>
+
+                                                <?= $asset['nama_status'] ?>
+                                            <?php } ?>
+                                        </td>
+                                        <td><?= $asset['kondisi_label'] ?></td>
                                         <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
                                             <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->

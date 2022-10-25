@@ -200,7 +200,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('User_level') ?>" class="nav-link">
+              <a href="<?= base_url('Asset_number') ?>" class="nav-link">
                 <i class="nav-icon fas fa-users-cog"></i>
                 <p>
                   Asset Number
@@ -217,7 +217,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('Penempatan/lantai') ?>" class="nav-link">
+                  <a href="<?= base_url('Kategori') ?>" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Kategori</p>
                   </a>

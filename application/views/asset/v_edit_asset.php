@@ -43,8 +43,8 @@
                                      <div class="form-group row">
                                          <label for="merk" class="col-sm-2 col-form-label">Asset Number</label>
                                          <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" name="asset_number" placeholder="Asset Number" value="<?= $asset->asset_number ?>" disabled>
-                                             <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="<?= $asset->asset_number ?>">
+                                             <input type="text" class="form-control rounded-0" name="asset_number" placeholder="Asset Number" value="<?= $asset->asset_number_name ?>-<?= $asset->numbering ?> " disabled>
+                                             <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="<?= $asset->id_asset_number ?>-<?= $asset->numbering ?>">
                                          </div>
                                      </div>
                                      <div class="form-group row">
