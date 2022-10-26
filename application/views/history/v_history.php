@@ -1,14 +1,14 @@
 <script language="javascript">
-    function printDiv(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
+  function printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
 
-        document.body.innerHTML = printContents;
+    document.body.innerHTML = printContents;
 
-        window.print();
+    window.print();
 
-        document.body.innerHTML = originalContents;
-    }
+    document.body.innerHTML = originalContents;
+  }
 </script>
 
 
@@ -33,11 +33,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">
-        
+
         <!-- Profile Image -->
         <div class="card card-primary card-outline" id="printableArea">
-          <div class="col-md-4"><input type="button" class="btn btn-outline-danger my-2" onclick="printDiv('printableArea')" value="Cetak" /></div>
           <div class="card-body box-profile">
+            <div class="text-center">
+              <img  src="<?= base_url() ?>images/<?= $asset->images ?>" width="400"  alt="User profile picture">
+            </div>
             <div class="text-center">
               <!-- <img class="profile-user-img img-fluid img-circle" src="<?= base_url() ?>assets/dist/img/lo.jpg" alt="User profile picture"> -->
             </div>
@@ -51,7 +53,7 @@
                 <b>Asset Number</b> <a class="float-right"><?= $asset->asset_number_name ?>-<?= $asset->numbering ?></a>
               </li>
               <li class="list-group-item">
-                <b>QR Code</b> <a class="float-right"><img src="<?= base_url('Asset/qrcode_detail/'. $asset->asset_number_name ."-".$asset->numbering) ?>" alt=""></a>
+                <b>QR Code</b> <a class="float-right"><img src="<?= base_url('Asset/qrcode_detail/' . $asset->asset_number_name . "-" . $asset->numbering) ?>" alt=""></a>
               </li>
               <li class="list-group-item">
                 <b>RAM</b> <a class="float-right"><?= $asset->ram ?></a>
@@ -60,7 +62,7 @@
                 <b>Penyimpanan</b> <a class="float-right"><?= $asset->type_penyimpanan ?></a>
               </li>
             </ul>
-
+            <a href="#" onclick="printDiv('printableArea')" class="btn btn-primary btn-block"><b>Cetak</b></a>
 
           </div>
           <!-- /.card-body -->

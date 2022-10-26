@@ -29,7 +29,7 @@
                      </div>
                      <!-- /.card-header -->
                      <!-- form start -->
-                     <form class="form-horizontal" method="post" action="<?= base_url('Asset/InsertAsset') ?>">
+                     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="<?= base_url('Asset/InsertAsset') ?>">
                          <div class="card-body">
                              <div class="row">
                                  <div class="col-md-2"></div>
@@ -82,6 +82,12 @@
                                          </div>
                                          <div class="col-sm-3">
                                              <input type="button" class="btn btn-info" id="asset_number_btn" value="Buat Number Asset Baru">
+                                         </div>
+                                     </div>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Upload Foto</label>
+                                         <div class="col-sm-10">
+                                             <input type="file" class="form-control rounded-0" name="images">
                                          </div>
                                      </div>
                                      <div class="form-group row">
@@ -218,7 +224,7 @@
 
          $('#select_ass_num').change(function() {
              var id = $(this).val();
-            //  var string_text = $(this).text();
+             //  var string_text = $(this).text();
              // alert(id);
              var string = $("#select_ass_num option:selected").text();
 
@@ -231,14 +237,14 @@
                  async: true,
                  dataType: 'json',
                  success: function(data) {
-                    
-                     $("#asset_number_txt").val(string +'-'+ data);
-                     $("#asset_number_txtowe").val(string +'-'+ data);
+
+                     $("#asset_number_txt").val(string + '-' + data);
+                     $("#asset_number_txtowe").val(string + '-' + data);
                      $("#numbering").val(data);
                      $("#id_asset_number").val(id);
-                     
 
-                    //  alert(s);
+
+                     //  alert(s);
                  }
              });
              return false;

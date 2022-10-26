@@ -33,6 +33,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Qrcode</th>
+                                    <th>Picture</th>
                                     <th>Asset Number</th>
                                     <th>Kategori</th>
                                     <th>Merk</th>
@@ -59,7 +60,8 @@
 
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td>
+                                        <td><img src="<?=  base_url('Asset/qrcode/'.$id_asset) ?>" alt=""></td>
+                                        <td><img src="images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
@@ -130,6 +132,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Qrcode</th>
+                                    <th>Picture</th>
                                     <th>Asset Number</th>
                                     <th>Merk</th>
                                     <th>Type</th>
@@ -152,7 +155,8 @@
 
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td>
+                                        <td><img src="<?=  base_url('Asset/qrcode/'.$asset['asset_id'] ) ?>" alt=""></td>
+                                        <td><img src="images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
                                         <td><?= $asset['type'] ?></td>
@@ -219,6 +223,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Qrcode</th>
+                                    <th>Picture</th>
                                     <th>Asset Number</th>
                                     <th>Kategori</th>
                                     <th>Merk</th>
@@ -235,9 +240,12 @@
                                 <?php $no = 1; ?>
                                 <?php foreach ($allasset as $asset) { ?>
                                     <?php $id_asset =  $asset['asset_id'] ?>
+                                    <?php $url = urlencode("geeksforgeeks.org") ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td>
+                                        <!-- <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td> -->
+                                        <td><img src="<?=  base_url('Asset/qrcode/'.$asset['asset_id'] ) ?>" alt=""></td>
+                                        <td><img src="images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
@@ -301,6 +309,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Qrcode</th>
+                                    <th>Picture</th>
                                     <th>Kategori</th>
                                     <th>Sub Kategori</th>
                                     <th>Merk</th>
@@ -324,7 +333,8 @@
 
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td>
+                                        <td><img src="<?=  base_url('Asset/qrcode/'.$asset['asset_id'] ) ?>" alt=""></td>
+                                        <td><img src="images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= $asset['tipe_network'] ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
@@ -452,7 +462,7 @@
 
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
+                                        <td><img src="<?=  base_url('Asset/qrcode/'.$asset['asset_id'] ) ?>" alt=""></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
                                         <td><?= $asset['type'] ?></td>

@@ -86,37 +86,52 @@ class Asset extends CI_Controller
 
 	public function InsertAsset()
 	{
-		$data = [
-			'id_asset_number' => $this->input->post('id_asset_number'),
-			'numbering' => $this->input->post('numbering'),
-			'tgl_penambahan' => $this->input->post('tgl_penambahan'),
-			'kondisi_label' => $this->input->post('kondisi_label'),
-			'numbering' => $this->input->post('numbering'),
-			'kategori_id' => $this->input->post('kategori_id'),
-			'merk' => $this->input->post('merk'),
-			'type' => $this->input->post('type'),
-			'processor' => $this->input->post('processor'),
-			'tipe_network' => $this->input->post('tipe_network'),
-			'ttl_port' => $this->input->post('ttl_port'),
-			'transmisi' => $this->input->post('transmisi'),
-			'serial_number' => $this->input->post('serial_number'),
-			'ram' => $this->input->post('ram'),
-			'type_penyimpanan' => $this->input->post('type_penyimpanan'),
-			'kepemilikan' => $this->input->post('kepemilikan'),
-			'id_user' => 1,
-			'status_kondisi' => $this->input->post('status_kondisi'),
-		];
-		$result = $this->db->insert('assets', $data);
-		if ($result) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h5><i class="icon fas fa-check"></i> Berhasil!</h5>
-        Asset Berhasil Ditambahkan
-      </div>');
-			redirect('Asset');
+		$ori_filename = $_FILES['images']['name'];
+		$new_name = time() . "" . str_replace(' ', '-', $ori_filename);
+		$config = array(
+			'upload_path' => "./images/",
+			'allowed_types' => "gif|jpg|png|jpeg|pdf",
+			'file_name' => $new_name,
+		);
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload('images')) {
+			echo "gagal upload";
 		} else {
-			redirect('Asset');
+			$prod_filename = $this->upload->data('file_name');
+			$data = [
+				'id_asset_number' => $this->input->post('id_asset_number'),
+				'numbering' => $this->input->post('numbering'),
+				'tgl_penambahan' => $this->input->post('tgl_penambahan'),
+				'kondisi_label' => $this->input->post('kondisi_label'),
+				'numbering' => $this->input->post('numbering'),
+				'kategori_id' => $this->input->post('kategori_id'),
+				'merk' => $this->input->post('merk'),
+				'type' => $this->input->post('type'),
+				'processor' => $this->input->post('processor'),
+				'tipe_network' => $this->input->post('tipe_network'),
+				'ttl_port' => $this->input->post('ttl_port'),
+				'transmisi' => $this->input->post('transmisi'),
+				'serial_number' => $this->input->post('serial_number'),
+				'ram' => $this->input->post('ram'),
+				'type_penyimpanan' => $this->input->post('type_penyimpanan'),
+				'kepemilikan' => $this->input->post('kepemilikan'),
+				'id_user' => 1,
+				'status_kondisi' => $this->input->post('status_kondisi'),
+				'images' => $prod_filename
+			];
+			$result = $this->db->insert('assets', $data);
+			if ($result) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<h5><i class="icon fas fa-check"></i> Berhasil!</h5>
+			Asset Berhasil Ditambahkan
+		  </div>');
+				redirect('Asset');
+			} else {
+				redirect('Asset');
+			}
 		}
+
 	}
 
 	public function UpdateAsset()
@@ -182,8 +197,9 @@ class Asset extends CI_Controller
 
 	function qrcode($kode)
 	{
+		$url = "https://hipernet.bumenet.com/History/show/" . $kode;
 		QRcode::png(
-			$kode,
+			$url,
 			$outfile = false,
 			$level = QR_ECLEVEL_H,
 			$size = 2,
