@@ -53,7 +53,7 @@
                 <b>Asset Number</b> <a class="float-right"><?= $asset->asset_number_name ?>-<?= $asset->numbering ?></a>
               </li>
               <li class="list-group-item">
-                <b>QR Code</b> <a class="float-right"><div id="printableArea"> <img src="<?= base_url('Asset/qrcode/' . $asset->asset_id) ?>" width="200" alt=""></div></a>
+                <b>QR Code</b> <a class="float-right"><div id="printableArea"> <img src="<?= base_url('History/qrcode/' . $asset->asset_id) ?>" width="200" alt=""></div></a>
               </li>
               <li class="list-group-item">
                 <b>RAM</b> <a class="float-right"><?= $asset->ram ?></a>

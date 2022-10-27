@@ -96,13 +96,13 @@
                                              <input type="text" class="form-control rounded-0" id="merk" name="merk" placeholder="Merk">
                                          </div>
                                      </div>
-
                                      <div class="form-group row">
                                          <label for="model" class="col-sm-2 col-form-label">Type</label>
                                          <div class="col-sm-10">
                                              <input type="text" class="form-control rounded-0" id="type" name="type" placeholder="Type">
                                          </div>
                                      </div>
+                                     <?php if ($id != 9) { ?>
                                      <div class="form-group row">
                                          <label for="model" class="col-sm-2 col-form-label">Processor</label>
                                          <div class="col-sm-10">
@@ -115,6 +115,7 @@
                                              <input type="text" class="form-control rounded-0" id="sn" name="serial_number" placeholder="Serial Number">
                                          </div>
                                      </div>
+                                     <?php } ?>
                                      <?php if ($id == 1) { ?>
                                          <div class="form-group row">
                                              <label for="model" class="col-sm-2 col-form-label">RAM</label>

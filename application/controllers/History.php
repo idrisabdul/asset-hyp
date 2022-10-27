@@ -28,6 +28,7 @@ class History extends CI_Controller
 		// if (!$this->session->userdata('user_id')) {
 		// 	redirect('Auth');
 		// }
+		$this->load->library('Ciqrcode');
 	}
 	public function show($asset_id)
 	{
@@ -99,5 +100,17 @@ class History extends CI_Controller
 		// $sql = $this->db->query("SELECT * FROM kondisi WHERE id_asset = $id ORDER BY kondisi_id DESC LIMIT 1")->row();
 		$this->db->delete('history', ['history_id' => $id]);
 		redirect('History/show/' . $id_asset);
+	}
+
+	function qrcode($kode)
+	{
+		$url = "https://hipernet.bumenet.com/History/show/" . $kode;
+		QRcode::png(
+			$url,
+			$outfile = false,
+			$level = QR_ECLEVEL_H,
+			$size = 2,
+			$margin = 2
+		);
 	}
 }
