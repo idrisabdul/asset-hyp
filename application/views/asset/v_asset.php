@@ -156,7 +156,7 @@
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><img src="<?=  base_url('Asset/qrcode/'.$asset['asset_id'] ) ?>" alt=""></td>
-                                        <td><img src="images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
+                                        <td><img src="<?= base_url() ?>images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
                                         <td><?= $asset['type'] ?></td>
@@ -245,7 +245,7 @@
                                         <td><?= $no++ ?></td>
                                         <!-- <td><img src="<?= base_url('Asset/qrcode/'. $asset['asset_number_name'] ."-".$asset['numbering']) ?>" alt=""></td> -->
                                         <td><img src="<?=  base_url('Asset/qrcode/'.$asset['asset_id'] ) ?>" alt=""></td>
-                                        <td><img src="images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
+                                        <td><img src="<?= base_url() ?>images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= $asset['asset_number_name'] ?>-<?= $asset['numbering'] ?></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
@@ -334,7 +334,7 @@
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><img src="<?=  base_url('Asset/qrcode/'.$asset['asset_id'] ) ?>" alt=""></td>
-                                        <td><img src="images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
+                                        <td><img src="<?= base_url() ?>images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= ucfirst($asset['nama_kategori']) ?></td>
                                         <td><?= $asset['tipe_network'] ?></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>

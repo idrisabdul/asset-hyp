@@ -61,7 +61,7 @@
                                          </div>
                                      <?php } ?>
 
-                                     <div class="form-group row">
+                                     <div class="form-group row" id="select_ass_num">
                                          <label for="vendor" class="col-sm-2 col-form-label">Pilih Asset Number</label>
                                          <div class="col-sm-10">
                                              <select class="custom-select rounded-0" id="select_ass_num" name="select_ass_num">
@@ -75,13 +75,13 @@
                                      <div class="form-group row">
                                          <label for="merk" class="col-sm-2 col-form-label">Asset Number</label>
                                          <div class="col-sm-7">
-                                             <input type="text" class="form-control rounded-0" id="asset_number_txtowe" name="dummy" placeholder="Asset Number" value="wait" disabled>
+                                             <input type="text" class="form-control rounded-0" id="asset_number_txtowe" name="dummy" placeholder="Asset Number" value="Automatis" disabled>
                                              <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="">
                                              <input type="hidden" class="form-control rounded-0" id="id_asset_number" name="id_asset_number" placeholder="Merk" value="">
-                                             <input type="hidden" class="form-control rounded-0" id="numbering" name="numbering" placeholder="Merk" value="">
+                                             <input type="hidden" class="form-control rounded-0" id="numbering" name="numbering" placeholder="Manual" value="">
                                          </div>
                                          <div class="col-sm-3">
-                                             <input type="button" class="btn btn-info" id="asset_number_btn" value="Buat Number Asset Baru">
+                                             <input type="button" class="btn btn-info" id="asset_number_btn" value="Manual Asset Number">
                                          </div>
                                      </div>
                                      <div class="form-group row">
@@ -216,7 +216,11 @@
  <script type="text/javascript">
      $(document).ready(function() {
          $('#asset_number_btn').click(function() {
-             $("#asset_number_txt").val('');
+             $("#id_asset_number").val('0');
+             $("#asset_number_txtowe").prop('disabled', false).attr('type','hidden');
+             $("#numbering").attr('type','text').val('');
+             $("#select_ass_num").prop('disabled', false);
+             $("#select_ass_num").hide();
          });
      });
 
