@@ -171,7 +171,7 @@
                 <li class="nav-item">
                   <a href="<?= base_url('Penempatan/lantai') ?>" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Lantai</p>
+                    <p>Lokasi</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -190,12 +190,13 @@
                 </p>
               </a>
             </li>
+            <?php if ($this->session->userdata('user_role') == 1) { ?>
             <li class="nav-header">SETTINGS</li>
             <li class="nav-item">
               <a href="<?= base_url('User_level') ?>" class="nav-link">
                 <i class="nav-icon fas fa-users-cog"></i>
                 <p>
-                  Users Management
+                  User Management
                 </p>
               </a>
             </li>
@@ -230,6 +231,7 @@
                 </li>
               </ul>
             </li>
+            <?php } ?>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -281,8 +283,8 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-      <strong>Copyright &copy; 2021 <a href="https://adminlte.io">HYPERNET INDODATA</a>.</strong>
-      Professional Service
+      <strong>Copyright &copy; 2021 <a href="https://www.bumenet.com">Bumenet Jogja</a>.</strong>
+      Software Developer
       <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 1.0
       </div>

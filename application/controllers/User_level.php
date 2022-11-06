@@ -36,27 +36,49 @@ class User_level extends CI_Controller
 		$this->template->load('template', 'user_level/v_user_level', $data);
 	}
 
-	public function AddHistory()
+	public function add_userrole()
 	{
-		$id = $this->input->post('id_asset');
-		$id_users = $this->input->post('id_users');
-		$data_upd = [
-			'id_user' => $id_users,
-		];
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$user_role = $this->input->post('password');
+		
 		$data = [
-			'id_asset' => $this->input->post('id_asset'),
-			'id_users' => $id_users,
-			'ip_address' => $this->input->post('ip_address'),
-			'tgl' => $this->input->post('tgl'),
+			'username' => $this->input->post('username'),
+			'password' => $this->input->post('password'),
+			'user_role' => $this->input->post('user_role'),
 		];
 
-		$this->db->update('assets', $data_upd, ['asset_id' => $id]);
-		$this->db->insert('history', $data);
+		$this->db->insert('user_level', $data);
 		$this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <h5><i class="icon fas fa-check"></i> Berhasil!</h5>
-        Asset berpindah ke user
+        User Role ditambahkan
       </div>');
-		redirect('asset');
+		redirect('User_level');
+	}
+
+	public function edit_userrole()
+	{
+		$id = $this->input->post('user_id');
+		$data = [
+			'username' => $this->input->post('username'),
+			'password' => $this->input->post('password'),
+			'user_role' => $this->input->post('user_role'),
+		];
+		$this->db->update('user_level', $data, ['user_id' => $id]);
+
+		$this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h5><i class="icon fas fa-check"></i> Alert!</h5>
+        User Role Berhasil Diedit
+      </div>');
+		redirect('User_level');
+	}
+
+	public function delete_userrole($id)
+	{
+		$this->db->delete('User_level', ['user_id' => $id]);
+		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">User Role Berhasil Dihapus</div>');
+		redirect('User_level');
 	}
 }

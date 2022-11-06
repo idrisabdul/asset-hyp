@@ -38,6 +38,14 @@ class History extends CI_Controller
 		$this->template->load('template', 'history/v_history', $data);
 	}
 
+	public function show_detail($asset_id)
+	{
+		$data['allusers'] = $this->History_m->AllUsers();
+		$data['asset'] = $this->Asset_m->AssetId($asset_id);
+		$data['history'] = $this->History_m->HistoryId($asset_id);
+		$this->template->load('template', 'history/v_history_detail', $data);
+	}
+
 	public function AddHistory()
 	{
 		$id = $this->input->post('id_asset');
@@ -105,6 +113,18 @@ class History extends CI_Controller
 	function qrcode($kode)
 	{
 		$url = "https://hipernet.bumenet.com/History/show/" . $kode;
+		QRcode::png(
+			$url,
+			$outfile = false,
+			$level = QR_ECLEVEL_H,
+			$size = 2,
+			$margin = 2
+		);
+	}
+
+	function qrcode_detail($kode)
+	{
+		$url = "https://hipernet.bumenet.com/History/show_detail/" . $kode;
 		QRcode::png(
 			$url,
 			$outfile = false,

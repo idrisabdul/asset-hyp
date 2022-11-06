@@ -5,18 +5,21 @@
                 <div class="card-header">
                     <h3 class="card-title">Asset Hypernet</h3>
                     <!-- <a href="<?= base_url('Asset/add_asset') ?>" type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</a> -->
-                    <div class="btn-group float-right">
-                        <button type="button" class="btn btn-default">Action</button>
-                        <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" role="menu">
-                            <!-- <a  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</a> -->
-                            <?php foreach ($allkategori as $ak) { ?>
-                                <a href="<?= base_url('Asset/add_asset/' . $ak['kategoris_id'] . '') ?>" type="button" class="dropdown-item"><?= ucfirst($ak['nama_kategori']) ?></a>
-                            <?php } ?>
+
+                    <?php if ($this->session->userdata('user_role') == 1) { ?>
+                        <div class="btn-group float-right">
+                            <button type="button" class="btn btn-default">Action</button>
+                            <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
+                                <!-- <a  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</a> -->
+                                <?php foreach ($allkategori as $ak) { ?>
+                                    <a href="<?= base_url('Asset/add_asset/' . $ak['kategoris_id'] . '') ?>" type="button" class="dropdown-item"><?= ucfirst($ak['nama_kategori']) ?></a>
+                                <?php } ?>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -47,7 +50,7 @@
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
                                     <th>Tanggal diberikan</th>
-                                    <th>Posisi</th>
+                                    <th>Lokasi</th>
                                     <th>Kondisi Barang</th>
                                     <th>Kondisi Label</th>
                                     <th>Action</th>
@@ -96,14 +99,25 @@
                                         }
                                         ?>
                                         <td><?= $tgl ?></td>
-                                        <td><?php if ($user_id > 1) { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
-                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } else { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } ?>
-                                        </td>
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
+                                                <?php } else { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>') ?>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i><?= $user ?></button>
+                                                <?php } else { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } ?>
                                         <td>
                                             <?php if ($asset['kategori_id'] == 1) { ?>
 
@@ -115,12 +129,20 @@
                                                 <?= $asset['nama_status'] ?>
                                             <?php } ?>
                                         </td>
-                                        <td><?= $asset['kondisi_label'] ?></td>
-                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                        <td> <?= $asset['kondisi_label'] ?></td>
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                                <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
-                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
-                                        </td>
+                                                <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                                <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                            </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -142,7 +164,7 @@
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
                                     <th>Tanggal diberikan</th>
-                                    <th>Posisi</th>
+                                    <th>Lokasi</th>
                                     <th>Kondisi Barang</th>
                                     <th>Kondisi Label</th>
                                     <th>Action</th>
@@ -187,14 +209,25 @@
                                             $user = $row_penempatan['nama_or_lantai'];
                                         }
                                         ?>
-                                        <td><?php if ($user_id > 1) { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
-                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } else { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } ?>
-                                        </td>
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
+                                                <?php } else { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>') ?>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i><?= $user ?></button>
+                                                <?php } else { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } ?>
                                         <td>
                                             <?php if ($asset['kategori_id'] == 1) { ?>
 
@@ -207,11 +240,19 @@
                                             <?php } ?>
                                         </td>
                                         <td><?= $asset['kondisi_label'] ?></td>
-                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td>
+                                                <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?><?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
-                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
-                                        </td>
+                                                <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                                <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                            </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -230,7 +271,7 @@
                                     <th>Type</th>
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
-                                    <th>Posisi</th>
+                                    <th>Lokasi</th>
                                     <th>Kondisi Barang</th>
                                     <th>Kondisi Label</th>
                                     <th>Action</th>
@@ -273,14 +314,25 @@
                                             $user = $row_penempatan['nama_or_lantai'];
                                         }
                                         ?>
-                                        <td><?php if ($user_id > 1) { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
-                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } else { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } ?>
-                                        </td>
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
+                                                <?php } else { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>') ?>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i><?= $user ?></button>
+                                                <?php } else { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } ?>
                                         <td>
                                             <?php if ($asset['kategori_id'] == 1) { ?>
 
@@ -293,11 +345,20 @@
                                             <?php } ?>
                                         </td>
                                         <td><?= $asset['kondisi_label'] ?></td>
-                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td>
+                                                <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                                <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
-                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
-                                        </td>
+                                                <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                                <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                            </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -321,7 +382,7 @@
                                     <th>Penyimpanan</th>
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
-                                    <th>Posisi</th>
+                                    <th>Lokasi</th>
                                     <th>Kondisi Barang</th>
                                     <th>Kondisi Label</th>
                                     <th>Action</th>
@@ -351,7 +412,7 @@
                                                     <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } else { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>') ?>
                                             <?php } ?>
                                         </td>
                                         <td>
@@ -366,11 +427,20 @@
                                             <?php } ?>
                                         </td>
                                         <td><?= $asset['kondisi_label'] ?></td>
-                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td>
+                                                <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                                <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
-                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
-                                        </td>
+                                                <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                                <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                            </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -392,7 +462,7 @@
                                     <th>Penyimpanan</th>
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
-                                    <th>Posisi</th>
+                                    <th>Lokasi</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -418,14 +488,23 @@
                                                     <i class="fa fa-user-check mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
                                             <?php } else { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $asset['nama_or_lantai'] . '</button>') ?>
+                                                    <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>') ?>
                                             <?php } ?>
                                         </td>
-                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td>
+                                                <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                                <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
-                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
-                                        </td>
+                                                <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                                <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                            </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -440,7 +519,7 @@
                                     <th>Qrcode</th>
                                     <th>Picture</th>
                                     <th>Merk</th>
-                                    <th>Type</th>  
+                                    <th>Type</th>
                                     <th>Kepemilikan</th>
                                     <th>Tanggal diberikan</th>
                                     <th>Lokasi</th>
@@ -461,7 +540,7 @@
                                         <td><img src="<?= base_url() ?>images/<?= $asset['images'] ?>" width="70" height="70" alt=""></td>
                                         <td><?= ucfirst($asset['merk']) ?></td>
                                         <td><?= $asset['type'] ?></td>
-                                        
+
                                         <td><?= $asset['nama_vendor'] ?></td>
                                         <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
                                         <?php
@@ -485,14 +564,25 @@
                                         }
                                         ?>
                                         <td><?= $tgl ?></td>
-                                        <td><?php if ($user_id > 1) { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
-                                                    <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } else { ?>
-                                                <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
-                                            <?php } ?>
-                                        </td>
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#"  class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
+                                                <?php } else { ?>
+                                                    <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>') ?>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td><?php if ($user_id > 1) { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-success">
+                                                        <i class="fa fa-user-check mr-1"></i><?= $user ?></button>
+                                                <?php } else { ?>
+                                                    <button type="button" href="#" class="btn btn-xs btn-warning">
+                                                        <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>
+                                                <?php } ?>
+                                            </td>
+                                        <?php } ?>
                                         <td>
                                             <?php if ($asset['kategori_id'] == 1) { ?>
 
@@ -505,11 +595,20 @@
                                             <?php } ?>
                                         </td>
                                         <td><?= $asset['kondisi_label'] ?></td>
-                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td>
+                                                <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                                <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
-                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
-                                        </td>
+                                                <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                                <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                            </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -533,7 +632,7 @@
                                     <th>S/N</th>
                                     <th>Kepemilikan</th>
                                     <th>Tanggal diberikan</th>
-                                    <th>Posisi</th>
+                                    <th>Lokasi</th>
                                     <th>Kondisi Barang</th>
                                     <th>Kondisi Label</th>
                                     <th>Action</th>
@@ -585,7 +684,7 @@
                                                     <i class="fa fa-user-check mr-1"></i>' . $user . '</button>') ?>
                                             <?php } else { ?>
                                                 <?= anchor('History/show/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-user-clock mr-1"></i>' . $user . '</button>') ?>
+                                                    <i class="fa fa-user-clock mr-1"></i>Lokasi Asset belum ditentukan</button>') ?>
                                             <?php } ?>
                                         </td>
                                         <td>
@@ -600,11 +699,20 @@
                                             <?php } ?>
                                         </td>
                                         <td><?= $asset['kondisi_label'] ?></td>
-                                        <td> <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
+                                        <?php if ($this->session->userdata('user_role') == 1) { ?>
+                                            <td>
+                                                <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                                <?= anchor('Asset/editAsset/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-warning">
                                                     <i class="fa fa-pen mr-1"></i></button>') ?>
-                                            <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
-                                            <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
-                                        </td>
+                                                <!-- <button href="#!" class="btn btn-sm  btn-rounded waves-effect waves-light btn-info"><i class="fa fa-eye mr-1"></i></button> -->
+                                                <button onclick="deleteConfirm('<?= base_url('Asset/delete/' . $asset['asset_id']) ?>')" href="#!" class="btn btn-xs btn-danger"><i class="fa fa-trash mr-1"></i></button>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td> <?= anchor('History/show_detail/' . $asset['asset_id'], '<button type="button" href="#" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye mr-1"></i></button>') ?>
+                                            </td>
+                                        <?php } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>

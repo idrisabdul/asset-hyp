@@ -38,7 +38,7 @@
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
             <div class="text-center">
-              <img  src="<?= base_url() ?>images/<?= $asset->images ?>" width="400"  alt="User profile picture">
+              <img class="product-image" src="<?= base_url() ?>images/<?= $asset->images ?>" width="400"  alt="User profile picture">
             </div>
             <div class="text-center">
               <!-- <img class="profile-user-img img-fluid img-circle" src="<?= base_url() ?>assets/dist/img/lo.jpg" alt="User profile picture"> -->
@@ -83,7 +83,7 @@
                 <div class="col-sm-10">
                   <select class="custom-select" id="id_users" name="id_users">
                     <option disabled selected value>-- Pilih --</option>
-                    <?php foreach ($allusers as $au) { ?>
+                    <?php foreach ($allusers as $au) { ?>   
                       <option value="<?= $au['user_id'] ?>"><?= $au['nama_or_lantai'] ?> - <?= $au['email'] ?></option>
                     <?php } ?>
                   </select>

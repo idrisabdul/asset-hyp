@@ -197,7 +197,7 @@ class Asset extends CI_Controller
 
 	function qrcode($kode)
 	{
-		$url = "https://hipernet.bumenet.com/History/show/" . $kode;
+		$url = "https://hipernet.bumenet.com/History/show_detail/" . $kode;
 		QRcode::png(
 			$url,
 			$outfile = false,
