@@ -27,7 +27,9 @@ class User_level extends CI_Controller
 		// $this->load->model('Asset_m');
 		if (!$this->session->userdata('user_id')) {
             redirect('Auth');
-        }
+        } else if ($this->session->userdata('user_role') != 1) {
+			$this->load->view('err_404');  
+		}
 	}
 
 	public function index()

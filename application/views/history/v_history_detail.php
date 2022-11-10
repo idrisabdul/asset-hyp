@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-12 product-image-thumbs">
                         <div class="product-image-thumb active"><img src="<?= base_url() ?>images/<?= $asset->images ?>" alt="Product Image"></div>
-                        <div class="product-image-thumb"><img src="<?= base_url('Asset/qrcode/' . $asset->asset_id) ?>" alt="Product Image"></div>
+                        <div class="product-image-thumb"><img src="<?= base_url('History/qrcode_detail/' . $asset->asset_id) ?>" alt="Product Image"></div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <img class="border border-success" src="<?= base_url('Asset/qrcode/' . $asset->asset_id) ?>" width="300">
+                            <img class="border border-success" src="<?= base_url('History/qrcode_detail/' . $asset->asset_id) ?>" width="300">
 
                         </div>
                     </div>
