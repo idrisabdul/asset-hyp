@@ -28,7 +28,7 @@
                      </div>
                      <!-- /.card-header -->
                      <!-- form start -->
-                     <form class="form-horizontal" method="post" action="<?= base_url('Asset/UpdateAsset') ?>">
+                     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="<?= base_url('Asset/UpdateAsset') ?>">
                          <div class="card-body">
                              <div class="row">
                                  <div class="col-md-2"></div>
@@ -45,6 +45,23 @@
                                          <div class="col-sm-10">
                                              <input type="text" class="form-control rounded-0" name="asset_number" placeholder="Asset Number" value="<?= $asset->asset_number_name ?>-<?= $asset->numbering ?> " disabled>
                                              <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="<?= $asset->id_asset_number ?>-<?= $asset->numbering ?>">
+                                         </div>
+                                     </div>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Foto</label>
+                                         <div class="card-body box-profile">
+                                             <div class="text-center">
+                                                 <div class="product-image-thumb active"><img src="<?= base_url() ?>images/<?= $asset->images ?>" alt="Product Image"></div>
+                                             </div>
+                                         </div>
+                                     </div>
+
+
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Ganti Foto</label>
+                                         <div class="col-sm-10">
+                                             <input type="file" class="form-control rounded-0" name="images">
+                                             <input type="hidden" class="form-control rounded-0" id="merk" name="rm_images" value="<?= $asset->images ?>" placeholder="Merk">
                                          </div>
                                      </div>
                                      <div class="form-group row">
