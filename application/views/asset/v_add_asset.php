@@ -29,6 +29,7 @@
                      </div>
                      <!-- /.card-header -->
                      <!-- form start -->
+                     <?php echo validation_errors(); ?>
                      <form class="form-horizontal" method="post" enctype="multipart/form-data" action="<?= base_url('Asset/InsertAsset') ?>">
                          <div class="card-body">
                              <div class="row">
@@ -78,7 +79,8 @@
                                              <input type="text" class="form-control rounded-0" id="asset_number_txtowe" name="dummy" placeholder="Asset Number" value="Automatis" disabled>
                                              <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="">
                                              <input type="hidden" class="form-control rounded-0" id="id_asset_number" name="id_asset_number" placeholder="Merk" value="">
-                                             <input type="hidden" class="form-control rounded-0" id="numbering" name="numbering" placeholder="Manual" value="">
+                                             <input type="hidden" class="form-control rounded-0" id="numbering" name="numbering" placeholder="Manual" value="<?= set_value('numbering'); ?>">
+                                             <?= form_error('numbering', '<small class="text-danger pl-3">', '</small>'); ?>
                                          </div>
                                          <div class="col-sm-3">
                                              <input type="button" class="btn btn-info" id="asset_number_btn" value="Manual Asset Number">
@@ -93,7 +95,7 @@
                                      <div class="form-group row">
                                          <label for="merk" class="col-sm-2 col-form-label">Merk</label>
                                          <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" id="merk" name="merk" placeholder="Merk">
+                                             <input type="text" class="form-control rounded-0" require id="merk" name="merk" placeholder="Merk">
                                          </div>
                                      </div>
                                      <div class="form-group row">
@@ -169,10 +171,10 @@
                                      <div class="form-group row">
                                          <label for="vendor" class="col-sm-2 col-form-label">Dari Vendor?</label>
                                          <div class="col-sm-10">
-                                             <select class="custom-select rounded-0" id="kepemilikan" name="kepemilikan">
-                                                 <option disabled selected value>-- Pilih --</option>
+                                             <select class="custom-select rounded-0" id="kepemilikan" name="kepemilikan" required="required">
+                                                 <option required value="">-- Pilih --</option>
                                                  <?php foreach ($allvendor as $av) { ?>
-                                                     <option value="<?= $av['vendor_id'] ?>"><?= $av['nama_vendor'] ?></option>
+                                                     <option  value="<?= $av['vendor_id'] ?>"><?= $av['nama_vendor'] ?></option>
                                                  <?php } ?>
                                              </select>
                                          </div>
@@ -196,7 +198,7 @@
                          </div>
                          <!-- /.card-body -->
                          <div class="card-footer">
-                             <button type="submit" class="btn btn-info">Simpan</button>
+                             <input type="submit" class="btn btn-info">Simpan</input>
                              <a href="<?= base_url('Asset') ?>" class="btn btn-default float-right">Batal</a>
                          </div>
                          <!-- /.card-footer -->
