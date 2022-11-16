@@ -26,6 +26,7 @@ class Asset extends CI_Controller
 		$this->load->model('Asset_m');
 		$this->load->model('Status_cek_m');
 		$this->load->model('Ass_number_m');
+		$this->load->model('Penempatan_m');
 		$this->load->library('Ciqrcode');
 
 		if (!$this->session->userdata('user_id')) {
@@ -54,6 +55,8 @@ class Asset extends CI_Controller
 		$data['allvendor'] = $this->Asset_m->AllVendor();
 		$data['allasset_number'] = $this->Ass_number_m->asset_number();
 		$data['status'] = $this->Status_cek_m->Status();
+		$data['allusers'] = $this->Penempatan_m->AllUsers();
+
 		$last_number_asset = $this->db->query("SELECT numbering FROM assets WHERE id_asset_number = 1  ORDER BY asset_id DESC LIMIT 1;")->row();
 
 		$last_int_number = (int)$last_number_asset->numbering;
@@ -117,6 +120,54 @@ class Asset extends CI_Controller
 				'images' => 'no_picture.jpg'
 			];
 			$result = $this->db->insert('assets', $data);
+
+			$nama = $this->input->post('nama_penerima');
+			if (is_numeric($nama) == false) {
+				// INSERT TO USER
+				$last_asset_id = $this->db->query("SELECT asset_id FROM assets ORDER BY asset_id DESC LIMIT 1;")->row();
+				$last_id = (int)$last_asset_id->asset_id;
+				$id_asset = $last_id;
+				$data_user = [
+					'nama_or_lantai' => $this->input->post('nama_penerima'),
+					'jenis' => 1,
+					'nik' => '',
+					'status' => '',
+					'email' => '',
+					'departemen' => '',
+				];
+				$this->db->insert('penempatan', $data_user);
+
+
+				// INSERT TO HISTORY
+				$last_user_id = $this->db->query("SELECT user_id FROM penempatan ORDER BY user_id DESC LIMIT 1;")->row();
+				$user_id = (int)$last_user_id->user_id;
+				$data = [
+					'id_asset' => $id_asset,
+					'id_users' => $user_id,
+					'ip_address' => '',
+					'tgl' => $this->input->post('tgl_pemberian'),
+				];
+				$this->db->insert('history', $data);
+			} else {
+				// INSERT TO USER
+				$last_asset_id = $this->db->query("SELECT asset_id FROM assets ORDER BY asset_id DESC LIMIT 1;")->row();
+				$last_id = (int)$last_asset_id->asset_id;
+				$id_asset = $last_id;
+
+
+				// INSERT TO HISTORY
+				$last_user_id = $this->db->query("SELECT user_id FROM penempatan ORDER BY user_id DESC LIMIT 1;")->row();
+				$user_id = (int)$last_user_id->user_id;
+				$data = [
+					'id_asset' => $id_asset,
+					'id_users' => $nama,
+					'ip_address' => '',
+					'tgl' => $this->input->post('tgl_pemberian'),
+				];
+				$this->db->insert('history', $data);
+			}
+
+
 			if ($result) {
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -151,6 +202,54 @@ class Asset extends CI_Controller
 				'images' => $prod_filename
 			];
 			$result = $this->db->insert('assets', $data);
+
+			$nama = $this->input->post('nama_penerima');
+			if (is_numeric($nama) == false) {
+				// INSERT TO USER
+				$last_asset_id = $this->db->query("SELECT asset_id FROM assets ORDER BY asset_id DESC LIMIT 1;")->row();
+				$last_id = (int)$last_asset_id->asset_id;
+				$id_asset = $last_id;
+				$data_user = [
+					'nama_or_lantai' => $this->input->post('nama_penerima'),
+					'jenis' => 1,
+					'nik' => '',
+					'status' => '',
+					'email' => '',
+					'departemen' => '',
+				];
+				$this->db->insert('penempatan', $data_user);
+
+
+				// INSERT TO HISTORY
+				$last_user_id = $this->db->query("SELECT user_id FROM penempatan ORDER BY user_id DESC LIMIT 1;")->row();
+				$user_id = (int)$last_user_id->user_id;
+				$data = [
+					'id_asset' => $id_asset,
+					'id_users' => $user_id,
+					'ip_address' => '',
+					'tgl' => $this->input->post('tgl_pemberian'),
+				];
+				$this->db->insert('history', $data);
+			} else {
+				// INSERT TO USER
+				$last_asset_id = $this->db->query("SELECT asset_id FROM assets ORDER BY asset_id DESC LIMIT 1;")->row();
+				$last_id = (int)$last_asset_id->asset_id;
+				$id_asset = $last_id;
+
+
+				// INSERT TO HISTORY
+				$last_user_id = $this->db->query("SELECT user_id FROM penempatan ORDER BY user_id DESC LIMIT 1;")->row();
+				$user_id = (int)$last_user_id->user_id;
+				$data = [
+					'id_asset' => $id_asset,
+					'id_users' => $nama,
+					'ip_address' => '',
+					'tgl' => $this->input->post('tgl_pemberian'),
+				];
+				$this->db->insert('history', $data);
+			}
+
+
 			if ($result) {
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

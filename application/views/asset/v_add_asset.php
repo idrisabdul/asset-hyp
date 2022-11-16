@@ -87,11 +87,19 @@
                                          </div>
                                      </div>
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Upload Foto</label>
-                                         <div class="col-sm-10">
-                                             <input type="file" class="form-control rounded-0" name="images">
+                                         <label for="merk" for="exampleInputFile" class="col-sm-2 col-form-label">Upload Foto</label>
+                                         <div class="col-sm-10 input-group">
+                                             <!-- <input type="file" class="form-control rounded-0" name="images"> -->
+                                             <div class="custom-file">
+                                                 <input type="file" class="custom-file-input" name="images" id="exampleInputFile">
+                                                 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                             </div>
+                                             <div class="input-group-append">
+                                                 <span class="input-group-text">Upload</span>
+                                             </div>
                                          </div>
                                      </div>
+                                     
                                      <div class="form-group row">
                                          <label for="merk" class="col-sm-2 col-form-label">Merk</label>
                                          <div class="col-sm-10">
@@ -105,18 +113,18 @@
                                          </div>
                                      </div>
                                      <?php if ($id != 9) { ?>
-                                     <div class="form-group row">
-                                         <label for="model" class="col-sm-2 col-form-label">Processor</label>
-                                         <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" id="sn" name="processor" placeholder="Processor">
+                                         <div class="form-group row">
+                                             <label for="model" class="col-sm-2 col-form-label">Processor</label>
+                                             <div class="col-sm-10">
+                                                 <input type="text" class="form-control rounded-0" id="sn" name="processor" placeholder="Processor">
+                                             </div>
                                          </div>
-                                     </div>
-                                     <div class="form-group row">
-                                         <label for="model" class="col-sm-2 col-form-label">S/N</label>
-                                         <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" id="sn" name="serial_number" placeholder="Serial Number">
+                                         <div class="form-group row">
+                                             <label for="model" class="col-sm-2 col-form-label">S/N</label>
+                                             <div class="col-sm-10">
+                                                 <input type="text" class="form-control rounded-0" id="sn" name="serial_number" placeholder="Serial Number">
+                                             </div>
                                          </div>
-                                     </div>
                                      <?php } ?>
                                      <?php if ($id == 1) { ?>
                                          <div class="form-group row">
@@ -174,7 +182,7 @@
                                              <select class="custom-select rounded-0" id="kepemilikan" name="kepemilikan" required="required">
                                                  <option required value="">-- Pilih --</option>
                                                  <?php foreach ($allvendor as $av) { ?>
-                                                     <option  value="<?= $av['vendor_id'] ?>"><?= $av['nama_vendor'] ?></option>
+                                                     <option value="<?= $av['vendor_id'] ?>"><?= $av['nama_vendor'] ?></option>
                                                  <?php } ?>
                                              </select>
                                          </div>
@@ -191,6 +199,37 @@
                                              <input type="date" class="form-control rounded-0" id="tgl_penambahan" name="tgl_penambahan" placeholder="Tanggal Pembelian">
                                          </div>
                                      </div>
+                                     <hr>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pemberian</label>
+                                         <div class="col-sm-10">
+                                             <input type="date" class="form-control rounded-0" id="tgl_pemberian" name="tgl_pemberian" placeholder="Tanggal Pembelian">
+                                         </div>
+                                     </div>
+                                     <div class="form-group row" id="select_user">
+                                         <label for="vendor" class="col-sm-2 col-form-label">Pindah Asset ke</label>
+                                         <div class="col-sm-10">
+                                             <select class="custom-select" id="id_users" name="nama_penerima">
+                                                 <option disabled selected value>-- Pilih --</option>
+                                                 <?php foreach ($allusers as $au) { ?>
+                                                     <option value="<?= $au['user_id'] ?>"><?= $au['nama_or_lantai'] ?> - <?= $au['email'] ?></option>
+                                                 <?php } ?>
+                                             </select>
+                                         </div>
+                                     </div>
+                                     <div class="form-group row">
+                                         <label for="merk" class="col-sm-2 col-form-label">Tidak ada dilist?</label>
+                                         <div class="col-sm-10 custom-control custom-checkbox">
+                                             <input class="custom-control-input" name="my_checkbox" type="checkbox" id="checkbox_inp" value="option1">
+                                             <label for="checkbox_inp" id="label_checkbox" class="custom-control-label"></label>
+                                         </div>
+                                     </div>
+                                     <div class="form-group row" id="input_user">
+                                         <label for="merk" class="col-sm-2 col-form-label">Nama Penerima</label>
+                                         <div class="col-sm-10">
+                                             <input type="text" class="form-control rounded-0" disabled id="nama_penerima" name="nama_penerima" placeholder="Masukkan nama penerima">
+                                         </div>
+                                     </div>
                                  </div>
                                  <div class="col-md-2"></div>
                              </div>
@@ -198,7 +237,7 @@
                          </div>
                          <!-- /.card-body -->
                          <div class="card-footer">
-                             <input type="submit" class="btn btn-info">Simpan</input>
+                             <button type="submit" class="btn btn-info">Simpan</button>
                              <a href="<?= base_url('Asset') ?>" class="btn btn-default float-right">Batal</a>
                          </div>
                          <!-- /.card-footer -->
@@ -220,11 +259,29 @@
      $(document).ready(function() {
          $('#asset_number_btn').click(function() {
              $("#id_asset_number").val('0');
-             $("#asset_number_txtowe").prop('disabled', false).attr('type','hidden');
-             $("#numbering").attr('type','text').val('');
+             $("#asset_number_txtowe").prop('disabled', false).attr('type', 'hidden');
+             $("#numbering").attr('type', 'text').val('');
              $("#select_ass_num").prop('disabled', false);
              $("#select_ass_num").hide();
          });
+     });
+
+     $(document).ready(function() {
+
+         $('#select_user').show();
+         $('#input_user').hide();
+         $('[name="my_checkbox"]').change(function() {
+             if ($('#checkbox_inp').is(':checked')) {
+                 $('#input_user').show();
+                 $('#id_users').prop('disabled', true);
+                 $('#nama_penerima').prop('disabled', false);
+             } else {
+                 $('#input_user').hide();
+                 $('#nama_penerima').prop('disabled', true);
+                 $('#id_users').prop('disabled', false);
+             }
+         });
+
      });
 
      $(document).ready(function() {
@@ -259,3 +316,28 @@
 
      });
  </script>
+ <script>
+     $(function() {
+         bsCustomFileInput.init();
+     });
+
+     //  $('input[type="checkbox"]').change(function() {
+     //      console.log('click');
+
+     //  });
+
+     $("#checkbox_inp").prop("checked", false);
+
+
+
+
+     function check_Radio_Checkb(rdb_new) {
+         if (!rdb_new.is(':checked')) {
+             alert('no');
+         } else {
+             alert('yes');
+             // return true;
+         }
+     }
+ </script>
+ <script src="<?= base_url() ?>assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
