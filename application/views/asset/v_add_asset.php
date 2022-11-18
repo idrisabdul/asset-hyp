@@ -74,12 +74,12 @@
                                          </div>
                                      </div>
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Asset Number</label>
+                                         <label for="merk" class="col-sm-2 col-form-label">Asset Number *</label>
                                          <div class="col-sm-7">
                                              <input type="text" class="form-control rounded-0" id="asset_number_txtowe" name="dummy" placeholder="Asset Number" value="Automatis" disabled>
                                              <input type="hidden" class="form-control rounded-0" id="asset_number_txt" name="asset_number_txt" placeholder="Asset Number" value="">
                                              <input type="hidden" class="form-control rounded-0" id="id_asset_number" name="id_asset_number" placeholder="Merk" value="">
-                                             <input type="hidden" class="form-control rounded-0" id="numbering" name="numbering" placeholder="Manual" value="<?= set_value('numbering'); ?>">
+                                             <input type="hidden" class="form-control rounded-0" id="numbering" name="numbering" placeholder="Manual" required value="<?= set_value('numbering'); ?>">
                                              <?= form_error('numbering', '<small class="text-danger pl-3">', '</small>'); ?>
                                          </div>
                                          <div class="col-sm-3">
@@ -101,15 +101,15 @@
                                      </div>
                                      
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Merk</label>
+                                         <label for="merk" class="col-sm-2 col-form-label">Merk *</label>
                                          <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" require id="merk" name="merk" placeholder="Merk">
+                                             <input type="text" class="form-control rounded-0" required id="merk" name="merk" required placeholder="Merk">
                                          </div>
                                      </div>
                                      <div class="form-group row">
-                                         <label for="model" class="col-sm-2 col-form-label">Type</label>
+                                         <label for="model" class="col-sm-2 col-form-label">Type *</label>
                                          <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" id="type" name="type" placeholder="Type">
+                                             <input type="text" class="form-control rounded-0" id="type" required name="type" placeholder="Type">
                                          </div>
                                      </div>
                                      <?php if ($id != 9) { ?>
@@ -166,9 +166,9 @@
                                          </div>
                                      <?php } ?>
                                      <div class="form-group row">
-                                         <label for="vendor" class="col-sm-2 col-form-label">Status</label>
+                                         <label for="vendor" class="col-sm-2 col-form-label">Status *</label>
                                          <div class="col-sm-10">
-                                             <select class="custom-select rounded-0" id="status_kondisi" name="status_kondisi">
+                                             <select class="custom-select rounded-0" id="status_kondisi" required name="status_kondisi">
                                                  <option disabled selected value>-- Pilih --</option>
                                                  <?php foreach ($status as $s) { ?>
                                                      <option value="<?= $s['status_cek_id'] ?>"><?= $s['nama_status'] ?></option>
@@ -177,7 +177,7 @@
                                          </div>
                                      </div>
                                      <div class="form-group row">
-                                         <label for="vendor" class="col-sm-2 col-form-label">Dari Vendor?</label>
+                                         <label for="vendor" class="col-sm-2 col-form-label">Dari Vendor? *</label>
                                          <div class="col-sm-10">
                                              <select class="custom-select rounded-0" id="kepemilikan" name="kepemilikan" required="required">
                                                  <option required value="">-- Pilih --</option>
@@ -188,28 +188,28 @@
                                          </div>
                                      </div>
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Kondisi Label</label>
+                                         <label for="merk" class="col-sm-2 col-form-label">Kondisi Label *</label>
                                          <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" id="kondisi_label" name="kondisi_label" placeholder="kondisi label">
+                                             <input type="text" class="form-control rounded-0" id="kondisi_label" required name="kondisi_label" placeholder="kondisi label">
                                          </div>
                                      </div>
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pembelian</label>
+                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pengadaan *</label>
                                          <div class="col-sm-10">
-                                             <input type="date" class="form-control rounded-0" id="tgl_penambahan" name="tgl_penambahan" placeholder="Tanggal Pembelian">
+                                             <input type="date" class="form-control rounded-0" id="tgl_penambahan" required name="tgl_penambahan" placeholder="Tanggal Pembelian">
                                          </div>
                                      </div>
                                      <hr>
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pemberian</label>
+                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pemberian *</label>
                                          <div class="col-sm-10">
-                                             <input type="date" class="form-control rounded-0" id="tgl_pemberian" name="tgl_pemberian" placeholder="Tanggal Pembelian">
+                                             <input type="date" class="form-control rounded-0" id="tgl_pemberian" required name="tgl_pemberian" placeholder="Tanggal Pembelian">
                                          </div>
                                      </div>
                                      <div class="form-group row" id="select_user">
-                                         <label for="vendor" class="col-sm-2 col-form-label">Pindah Asset ke</label>
+                                         <label for="vendor" class="col-sm-2 col-form-label">Pindah Asset ke *</label>
                                          <div class="col-sm-10">
-                                             <select class="custom-select" id="id_users" name="nama_penerima">
+                                             <select class="custom-select" id="id_users" required name="nama_penerima">
                                                  <option disabled selected value>-- Pilih --</option>
                                                  <?php foreach ($allusers as $au) { ?>
                                                      <option value="<?= $au['user_id'] ?>"><?= $au['nama_or_lantai'] ?> - <?= $au['email'] ?></option>
@@ -227,7 +227,7 @@
                                      <div class="form-group row" id="input_user">
                                          <label for="merk" class="col-sm-2 col-form-label">Nama Penerima</label>
                                          <div class="col-sm-10">
-                                             <input type="text" class="form-control rounded-0" disabled id="nama_penerima" name="nama_penerima" placeholder="Masukkan nama penerima">
+                                             <input type="text" class="form-control rounded-0" disabled id="nama_penerima" required name="nama_penerima" placeholder="Masukkan nama penerima">
                                          </div>
                                      </div>
                                  </div>

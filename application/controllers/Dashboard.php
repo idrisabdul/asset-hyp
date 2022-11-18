@@ -37,8 +37,10 @@ class Dashboard extends CI_Controller
 		$data['ttl_lainnya'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 5")->num_rows();
 		$data['kategori'] = $this->db->query("SELECT * FROM kategori WHERE type_kategori = 1")->result();
 		$data['status_cek'] = $this->db->query("SELECT * FROM status_cek")->result();
-		$status_cek = $this->db->query("SELECT * FROM status_cek")->result();
 		$data['allasset'] = $this->Asset_m->AllAsset();
+
+		$sql_perlu_qc = "SELECT * FROM assets WHERE status_kondisi = 5 AND kategori_id = 1";
+		$data['perlu_qc'] = $this->db->query($sql_perlu_qc)->result();
 		// echo '<pre>';
 		// echo var_dump($status_cek);
 		// echo '</pre>';

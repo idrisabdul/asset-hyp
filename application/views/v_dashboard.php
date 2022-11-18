@@ -6,8 +6,8 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v1</li>
+                    <li class="breadcrumb-item"><a href="https://hipernet.bumenet.com/">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -95,6 +95,61 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Asset yang perlu di QC</h3>
+                    </div>
+                    <div class="card-body">
+                        <table id="example" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Eks Karyawan</th>
+                                    <th>Merk Barang</th>
+                                    <th>Serial Number</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no = 1; ?>
+                                <?php foreach ($perlu_qc as $qc) { ?>
+                                    <?php $id_asset =  $qc->asset_id ?>
+
+
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
+                                        <?php
+                                        $row_history = $this->db->query($sql)->row_array();
+                                        if ($row_history == null) {
+                                            $user_id = 0;
+                                            $tgl = "null";
+                                        } else {
+                                            $user_id = $row_history['id_users'];
+                                            $tgl = $row_history['tgl'];
+                                        }
+
+                                        $sql_penempatan = "SELECT * FROM penempatan WHERE user_id = $user_id";
+                                        $row_penempatan = $this->db->query($sql_penempatan)->row_array();
+                                        if ($row_penempatan == null) {
+                                            $user = "Null";
+                                        } else {
+                                            $user = $row_penempatan['nama_or_lantai'];
+                                        }
+                                        ?>
+                                        <td><?= $user ?></td>
+                                        <td><?= $qc->type ?></td>
+                                        <td><?= $qc->serial_number ?></td>
+                                        <td><?= anchor('cek/add_cek/' . $qc->asset_id, '<button type="button" class="btn btn-xs btn-info">Pilih
+                                                    </button>') ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
             </section>
 
 
@@ -149,79 +204,13 @@
                         </table>
                     </div>
                     <!-- /.card-body-->
-                    <div class="card-footer bg-transparent">
-                        <div class="row">
-                            <div class="col-4 text-center">
-                                <div id="sparkline-1"></div>
-                                <div class="text-white">Visitors</div>
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-4 text-center">
-                                <div id="sparkline-2"></div>
-                                <div class="text-white">Online</div>
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-4 text-center">
-                                <div id="sparkline-3"></div>
-                                <div class="text-white">Sales</div>
-                            </div>
-                            <!-- ./col -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
+
                 </div>
                 <!-- /.card -->
 
-                <!-- solid sales graph -->
-                <div class="card bg-gradient-info">
-                    <div class="card-header border-0">
-                        <h3 class="card-title">
-                            <i class="fas fa-th mr-1"></i>
-                            Sales Graph
-                        </h3>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer bg-transparent">
-                        <div class="row">
-                            <div class="col-4 text-center">
-                                <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                                <div class="text-white">Mail-Orders</div>
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-4 text-center">
-                                <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                                <div class="text-white">Online</div>
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-4 text-center">
-                                <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                                <div class="text-white">In-Store</div>
-                            </div>
-                            <!-- ./col -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <!-- /.card-footer -->
-                </div>
-                <!-- /.card -->
-
+            </section>
         </div>
-        <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </section>
 
@@ -264,8 +253,7 @@
         var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
         var donutData = {
             labels: [
-                <?php foreach ($status_cek as $cek) { ?> 
-                    '<?= $cek->nama_status ?>',
+                <?php foreach ($status_cek as $cek) { ?> '<?= $cek->nama_status ?>',
                 <?php } ?>
             ],
             datasets: [{
