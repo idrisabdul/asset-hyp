@@ -57,25 +57,25 @@ class Asset extends CI_Controller
 		$data['status'] = $this->Status_cek_m->Status();
 		$data['allusers'] = $this->Penempatan_m->AllUsers();
 
-		$last_number_asset = $this->db->query("SELECT numbering FROM assets WHERE id_asset_number = 1  ORDER BY asset_id DESC LIMIT 1;")->row();
+		// $last_number_asset = $this->db->query("SELECT numbering FROM assets WHERE id_asset_number = 1  ORDER BY asset_id DESC LIMIT 1;")->row();
 
-		$last_int_number = (int)$last_number_asset->numbering;
+		// $last_int_number = (int)$last_number_asset->numbering;
 
-		$last_number = $last_int_number + 1;
-		if ($last_number <= 9) {
-			$URUT = "000" . $last_number;
-		} elseif ($last_number >= 9 && $last_number < 99) {
-			$URUT = "00" . $last_number;
-		} elseif ($last_number >= 99 && $last_number < 999) {
-			$URUT = "0" . $last_number;
-		} elseif ($last_number >= 9999) {
-			$URUT =  $last_number;
-		}
+		// $last_number = $last_int_number + 1;
+		// if ($last_number <= 9) {
+		// 	$URUT = "000" . $last_number;
+		// } elseif ($last_number >= 9 && $last_number < 99) {
+		// 	$URUT = "00" . $last_number;
+		// } elseif ($last_number >= 99 && $last_number < 999) {
+		// 	$URUT = "0" . $last_number;
+		// } elseif ($last_number >= 9999) {
+		// 	$URUT =  $last_number;
+		// }
 
 		// $add_count = (int) $last_number + 1;
 		// var_dump($last_number);
 		// $data['urut'] = $asset_num_str . $URUT;
-		$data['urut'] = $URUT;
+		// $data['urut'] = $URUT;
 		$this->template->load('template', 'asset/v_add_asset', $data);
 	}
 

@@ -33,9 +33,16 @@ class Dashboard extends CI_Controller
 	{
 		$data['ttl_laptop'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 1")->num_rows();
 		$data['ttl_printer'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 2")->num_rows();
-		$data['ttl_network'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 3")->num_rows();
+		$data['ttl_furniture'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 9")->num_rows();
 		$data['ttl_lainnya'] = $this->db->query("SELECT * FROM assets WHERE kategori_id = 5")->num_rows();
 		$data['kategori'] = $this->db->query("SELECT * FROM kategori WHERE type_kategori = 1")->result();
+		$data['status_cek'] = $this->db->query("SELECT * FROM status_cek")->result();
+		$status_cek = $this->db->query("SELECT * FROM status_cek")->result();
+		$data['allasset'] = $this->Asset_m->AllAsset();
+		// echo '<pre>';
+		// echo var_dump($status_cek);
+		// echo '</pre>';
+		// $queri =  select count(*) status_kondisi from assets WHERE status_kondisi = 5;  $cek->status_cek_id
 
 		$data['status'] = $this->db->query("SELECT status_kondisi, COUNT(status_kondisi) FROM assets WHERE kategori_id = 1 GROUP BY status_kondisi")->result_array();
 		$data['statuss'] = $this->db->query("SELECT * FROM assets LEFT JOIN status_cek ON status_cek.status_cek_id = assets.status_kondisi WHERE kategori_id = 1 GROUP BY status_cek.nama_status")->result_array();

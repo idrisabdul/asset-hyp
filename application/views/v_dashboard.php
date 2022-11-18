@@ -29,7 +29,7 @@
                         <p>Laptop dan PC</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fa fa-desktop" aria-hidden="true"></i>
                     </div>
                     <a href="<?= base_url('Asset/filter/1') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -44,7 +44,7 @@
                         <p>Printer</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="fa fa-print" aria-hidden="true"></i>
                     </div>
                     <a href="<?= base_url('Asset/filter/2') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -54,12 +54,12 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3><?= $ttl_network ?></h3>
+                        <h3><?= $ttl_furniture ?></h3>
 
-                        <p>Network</p>
+                        <p>Furniture</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fa fa-building" aria-hidden="true"></i>
                     </div>
                     <a href="<?= base_url('Asset/filter/3') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -88,55 +88,65 @@
             <section class="col-lg-7 connectedSortable">
                 <div class="card card-danger">
                     <div class="card-header">
-                        <h3 class="card-title">Asset Chart</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
+                        <h3 class="card-title">Monitoring Kondisi Asset</h3>
                     </div>
                     <div class="card-body">
                         <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                     <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
-                <!-- /.card -->
-                <!-- /.card -->
-
-
-
-
-                <!-- /.card -->
             </section>
+
+
             <!-- /.Left col -->
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
             <section class="col-lg-5 connectedSortable">
 
                 <!-- Map card -->
-                <div class="card bg-gradient-primary">
+                <div class="card card-primary">
                     <div class="card-header border-0">
                         <h3 class="card-title">
-                            <i class="fas fa-map-marker-alt mr-1"></i>
-                            Visitors
+                            <i class="fas fa-item-marker-alt mr-1"></i>
+                            Asset yang tersedia
                         </h3>
                         <!-- card tools -->
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                                <i class="far fa-calendar-alt"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
                         <!-- /.card-tools -->
                     </div>
                     <div class="card-body">
-                        <div id="world-map" style="height: 250px; width: 100%;"></div>
+                        <table id="example2" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Kategori</th>
+                                    <th>Merk</th>
+                                    <th>Serial Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no = 1; ?>
+                                <?php foreach ($allasset as $asset) { ?>
+                                    <?php $id_asset =  $asset['asset_id'] ?>
+                                    <?php $sql = "SELECT * FROM history WHERE id_asset = '$id_asset' ORDER BY history_id DESC LIMIT 1;" ?>
+                                    <?php
+                                    $row_history = $this->db->query($sql)->row_array();
+                                    if ($row_history == null) {
+                                        $user_id = 0;
+                                        $tgl = "null";
+                                    } else {
+                                        $user_id = $row_history['id_users'];
+                                        $tgl = $row_history['tgl'];
+                                    } ?>
+                                    <?php if ($user_id == 0) { ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= ucfirst($asset['nama_kategori']) ?></td>
+                                            <td><?= ucfirst($asset['merk']) ?></td>
+                                            <td><?= ucfirst($asset['serial_number']) ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.card-body-->
                     <div class="card-footer bg-transparent">
@@ -214,9 +224,6 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </section>
-<?php foreach ($kategori as $kat) { ?>
-    <?= $kat->nama_kategori ?>
-<?php } ?>
 
 <!-- ChartJS -->
 <script src="<?= base_url() ?>assets/plugins/chart.js/Chart.min.js"></script>
@@ -257,13 +264,16 @@
         var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
         var donutData = {
             labels: [
-                <?php foreach ($kategori as $kat) { ?>
-                    '<?= $kat->nama_kategori ?>',
+                <?php foreach ($status_cek as $cek) { ?> 
+                    '<?= $cek->nama_status ?>',
                 <?php } ?>
             ],
             datasets: [{
-                data: [700, 500, 400, 600, 300, 100],
-                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                data: [<?php foreach ($status_cek as $cek) { ?>
+                        <?php $queri =  $this->db->query("SELECT count(*) status_kondisi FROM assets WHERE status_kondisi = $cek->status_cek_id;")->row_array() ?> '<?= $queri['status_kondisi'] ?>',
+                    <?php } ?>
+                ],
+                backgroundColor: ['#00a65a', '#00c0ef', '#f39c12', '#f56954'],
             }]
         }
         var donutOptions = {
