@@ -194,16 +194,16 @@
                                          </div>
                                      </div>
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pengadaan *</label>
+                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pengadaan</label>
                                          <div class="col-sm-10">
-                                             <input type="date" class="form-control rounded-0" id="tgl_penambahan" required name="tgl_penambahan" placeholder="Tanggal Pembelian">
+                                             <input type="date" class="form-control rounded-0" id="tgl_penambahan" name="tgl_penambahan" placeholder="Tanggal Pembelian">
                                          </div>
                                      </div>
                                      <hr>
                                      <div class="form-group row">
-                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pemberian *</label>
+                                         <label for="merk" class="col-sm-2 col-form-label">Tanggal Pemberian</label>
                                          <div class="col-sm-10">
-                                             <input type="date" class="form-control rounded-0" id="tgl_pemberian" required name="tgl_pemberian" placeholder="Tanggal Pembelian">
+                                             <input type="date" class="form-control rounded-0" id="tgl_pemberian" name="tgl_pemberian" placeholder="Tanggal Pembelian">
                                          </div>
                                      </div>
                                      <div class="form-group row" id="select_user">
