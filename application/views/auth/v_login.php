@@ -19,7 +19,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="https://hypernet.co.id/en/" class="h1" target="_blanks"><b>Asset</b> HYP</a>
+      <a href="https://www.bumenet.com/" class="h1" target="_blanks"><b>Asset</b></a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
